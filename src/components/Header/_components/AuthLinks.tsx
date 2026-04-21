@@ -4,8 +4,20 @@ import React from "react";
 // ==============================================================
 function AuthLinks() {
   const authLinks = [
-    { id: "login", icon: LogIn, linkName: "تسجيل الدخول", href: "" },
-    { id: "register", icon: UserPlus, linkName: "انشاء حساب", href: "" },
+    {
+      id: "login",
+      icon: LogIn,
+      linkName: "تسجيل الدخول",
+      href: "/login",
+      style: "ring ring-gray-50/30 bg-white/10 hover:bg-white/20",
+    },
+    {
+      id: "register",
+      icon: UserPlus,
+      linkName: "انشاء حساب",
+      href: "/register",
+      style: "bg-linear-to-r from-indigo-500 to-pink-500",
+    },
   ];
   return (
     <div className="flex items-center gap-3">
@@ -14,7 +26,8 @@ function AuthLinks() {
           <Link
             title={authLink.linkName}
             href={authLink.href}
-            className={`flex items-center gap-1.5 flex-row-reverse py-2 px-4 rounded-lg shadow bg-white/20 hover:bg-white/25 active:scale-95 mytransition ${authLink.linkName === "انشاء حساب" && "bg-linear-to-r from-indigo-500 to-pink-500"}`}
+            className={`flex items-center gap-1.5 flex-row-reverse py-2 px-4 rounded-lg shadow active:scale-95 mytransition 
+              ${authLink.style}`}
           >
             {authLink.linkName}
             <authLink.icon size={20} />

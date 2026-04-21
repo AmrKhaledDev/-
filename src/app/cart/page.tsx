@@ -3,7 +3,7 @@ import product_1 from "../../../assets/product_1.png";
 import product_2 from "../../../assets/product_2.png";
 import product_3 from "../../../assets/product_3.png";
 import Image from "next/image";
-import { formatCurrency } from "@/lib/formatCurrency/formatCurrency";
+import { formatCurrency } from "@/lib/formatCurrency";
 import { Plus, Minus, Trash2, CreditCard } from "lucide-react";
 // ====================================================
 function Cart() {
@@ -37,7 +37,7 @@ function Cart() {
     },
   ];
   return (
-    <main className="section-p text-white pb-5">
+    <main className="section-p text-white">
       <div className="mycontainer section-flex">
         <SectionHead title="سلة التسوق الخاص بك" />
         <div className="flex flex-col gap-5">
@@ -79,7 +79,7 @@ function Cart() {
         </div>
         <div className="p-5 rounded-2xl shadow-xl flex items-center justify-between gap-5 ring ring-gray-50/20 bg-white/5 text-[17px]">
           <h2 className="font-extrabold flex items-center gap-4">
-            المجموع الكلي : 
+            المجموع الكلي :
             <span className="text-white ring ring-gray-50/20 shadow bg-white/5 py-2 px-6 rounded-md font-extrabold text-xl">
               {formatCurrency.format(1600)}
             </span>

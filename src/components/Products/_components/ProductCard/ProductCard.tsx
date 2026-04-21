@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { formatCurrency } from "@/lib/formatCurrency/formatCurrency";
+import { formatCurrency } from "@/lib/formatCurrency";
 import { ShoppingBag } from "lucide-react";
 import Image from "next/image";
 // ========================================================================
 function ProductCard({ product }: { product: any }) {
   return (
-    <div
-      className="p-5 rounded-2xl shadow-xl flex flex-col gap-4 ring ring-gray-50/20 bg-white/5 hover:shadow-2xl hover:scale-102 mytransition"
-    >
+    <div className="p-5 rounded-2xl shadow-xl flex flex-col gap-4 ring ring-gray-50/20 bg-white/5 hover:shadow-2xl hover:scale-102 mytransition">
       <Image
         src={product.image}
         alt={product.name}

@@ -12,7 +12,7 @@ function Links() {
          تسوق الآن <ShoppingCart />
       </Link>
       <Link
-        href={""}
+        href={"/categories"}
         title="تصفح الفئات"
         className="w-fit ring ring-gray-50/20 bg-white/5 py-3 px-6 rounded-md font-semibold shadow mytransition hover:scale-105 active:scale-95"
       >

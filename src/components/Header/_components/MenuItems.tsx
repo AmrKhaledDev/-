@@ -23,7 +23,7 @@ function MenuItems() {
               title={link.linkName}
               href={link.href}
               className={`flex items-center gap-2 hover:shadow cursor-default mytransition py-2 px-4 rounded-lg 
-                ${pathname === link.href ? "bg-linear-to-r to-indigo-500 from-pink-500":"hover:bg-white/15 "}`}
+                ${pathname === link.href ? "bg-linear-to-r to-indigo-500 from-pink-500":"hover:bg-white/5 hover:ring hover:ring-gray-50/20"}`}
             >
               <link.icon />
               {link.linkName}

@@ -2,7 +2,7 @@ import SectionHead from "@/components/SectionHead/SectionHead";
 import product_1 from "../../../assets/product_1.png";
 import product_2 from "../../../assets/product_2.png";
 import Image from "next/image";
-import { formatCurrency } from "@/lib/formatCurrency/formatCurrency";
+import { formatCurrency } from "@/lib/formatCurrency";
 import OrderFormField from "./_components/OrderFormField";
 
 // =============================================================
@@ -64,7 +64,10 @@ function Order() {
               ))}
             </div>
             <p className="mt-10 flex items-center gap-3">
-               المجموع الكلي : <span className="font-semibold text-xl ring ring-gray-50/20 bg-white/5 rounded py-3 px-6">{formatCurrency.format(1100)}</span>
+              المجموع الكلي :{" "}
+              <span className="font-semibold text-xl ring ring-gray-50/20 bg-white/5 rounded py-3 px-6">
+                {formatCurrency.format(1100)}
+              </span>
             </p>
           </div>
           <form className="p-5 rounded-2xl flex-1 shadow-xl flex flex-col gap-5 ring ring-gray-50/20 bg-white/5">
