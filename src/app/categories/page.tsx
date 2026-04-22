@@ -1,6 +1,6 @@
 import SectionHead from "@/components/SectionHead/SectionHead";
 import { all_products, categories } from "../../../assets/data";
-import ProductsWithFilter from "./_components/Products";
+import ProductsWithFilter from "./_components/ProductsWithFilter";
 // ====================================================
 function Categories() {
   return (

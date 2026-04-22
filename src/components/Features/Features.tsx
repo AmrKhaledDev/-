@@ -18,7 +18,7 @@ function Features() {
       Icon: RefreshCcw,
       title: "إرجاع سهل",
       desc: "إجراءات بسيطة وسريعة خلال دقائق.",
-      color: "from-purple-500 to-pink-500",
+      color: "bgg-ip",
     },
     {
       Icon: Headphones,

@@ -16,7 +16,7 @@ function AuthLinks() {
       icon: UserPlus,
       linkName: "انشاء حساب",
       href: "/register",
-      style: "bg-linear-to-r from-indigo-500 to-pink-500",
+      style: "bgg-ip",
     },
   ];
   return (
@@ -26,7 +26,7 @@ function AuthLinks() {
           <Link
             title={authLink.linkName}
             href={authLink.href}
-            className={`flex items-center gap-1.5 flex-row-reverse py-2 px-4 rounded-lg shadow active:scale-95 mytransition 
+            className={`flex items-center gap-1.5 hover:-rotate-2 flex-row-reverse py-2 px-4 rounded-lg shadow active:scale-95 mytransition 
               ${authLink.style}`}
           >
             {authLink.linkName}

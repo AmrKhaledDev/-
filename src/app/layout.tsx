@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en" className={`${almarai.className}  h-full`}>
       <body
         dir="rtl"
-        className="min-h-full flex flex-col bg-linear-to-r to-indigo-900 from-pink-900"
+        className="min-h-full flex flex-col bg-linear-to-r to-indigo-950 from-pink-950 [word-break:break-word]"
       >
         <Header />
         {children}

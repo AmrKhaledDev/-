@@ -18,7 +18,7 @@ function ProductCard({ product }: { product: any }) {
         {product.description}
       </p>
       <div className="flex items-center justify-between">
-        <button className="flex items-center bg-linear-to-r cursor-pointer hover:scale-105 mytransition from-indigo-500 to-pink-500 py-2 px-4 rounded-md gap-2 font-semibold text-sm">
+        <button className="flex items-center cursor-pointer hover:scale-105 mytransition bgg-ip py-2 px-4 rounded-md gap-2 font-semibold text-sm">
           <ShoppingBag className="size-4.5" /> اضف
         </button>
         <p className="text-[#00d3f3] font-extrabold">

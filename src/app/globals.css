@@ -22,3 +22,6 @@
   @apply absolute shadow left-2 top-1/2 -translate-y-1/2 rounded-full p-1 ring ring-gray-50/20 bg-white/5;
   @apply hover:bg-white/20 transition-all duration-300;
 }
+@utility bgg-ip {
+  @apply bg-linear-to-r to-indigo-500 from-pink-500;
+}

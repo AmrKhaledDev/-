@@ -2,47 +2,69 @@
 import AuthFormField from "@/components/AuthFormField/AuthFormField";
 import AuthRedirect from "@/components/AuthRedirect/AuthRedirect";
 import ButtonSubmit from "@/components/ButtonSubmit/ButtonSubmit";
-import { LoginErrors } from "@/lib/types";
-import { UserCircle2 } from "lucide-react";
-import Link from "next/link";
+import { UserPlus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
-import handleLogin from "./_components/handleLogin";
 import AlertMessage from "@/components/AlertMessage/AlertMessage";
 import { motion } from "framer-motion";
+import { RegisterErrors } from "@/lib/types";
+import { handleRegister } from "./_components/handleRegister";
 // ============================
-function Login() {
+function Register() {
   const router = useRouter();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState<LoginErrors>({});
+  const [errors, setErrors] = useState<RegisterErrors>({});
   const [success, setSuccess] = useState("");
-  const submit = (e: FormEvent) => {
-    handleLogin(e, setLoading, setErrors, setSuccess, email, password, router);
-  };
+  const submit = async (e: FormEvent) =>
+    handleRegister(
+      e,
+      setLoading,
+      setName,
+      setEmail,
+      setPassword,
+      setConfirmPassword,
+      router,
+      setErrors,
+      setSuccess,
+      name,
+      email,
+      password,
+      confirmPassword,
+    );
   return (
-    <main>
-      <div className="mycontainer pt-30 text-white">
+    <main className="section-p">
+      <div className="mycontainer pt-25 text-white">
         <motion.form
-          initial={{ opacity: 1, y: 80 }}
+          onSubmit={submit}
+          initial={{ opacity: 1, y: 100 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
           viewport={{ once: true }}
-          onSubmit={submit}
           className="p-5 ring ring-gray-50/15 bg-white/5 rounded-2xl max-w-110 shadow mx-auto flex flex-col items-center gap-5"
         >
           <div className="ring ring-gray-50/15 p-3 rounded-2xl bg-white/5 -mt-20 shadow">
-            <UserCircle2 className="size-24 text-gray-200" />
+            <UserPlus className="size-21 text-gray-200" />
           </div>
-          <h1 className="font-semibold text-2xl">تسجيل الدخول</h1>
+          <h1 className="font-semibold text-2xl">انشاء حساب</h1>
           <div className="w-full flex flex-col gap-3">
             {errors.serverError && (
               <AlertMessage type="error" message={errors.serverError} />
             )}
             {success && <AlertMessage type="success" message={success} />}
             <div className="w-full flex flex-col gap-3">
+              <AuthFormField
+                type="text"
+                placeholder="الاسم الكامل"
+                value={name}
+                onChange={setName}
+                error={errors.name}
+              />
               <AuthFormField
                 type="email"
                 placeholder="البريد الإلكتروني"
@@ -59,19 +81,22 @@ function Login() {
                 onChange={setPassword}
                 error={errors.password}
               />
-              <Link
-                href={"/forgot-password"}
-                className="text-sm text-indigo-200 hover:underline mx-auto w-fit"
-              >
-                نسيت كلمة السر؟
-              </Link>
+              <AuthFormField
+                type={showConfirmPassword ? "text" : "password"}
+                placeholder="تأكيد كلمة السر"
+                setShowPassword={setShowConfirmPassword}
+                showPassword={showConfirmPassword}
+                value={confirmPassword}
+                onChange={setConfirmPassword}
+                error={errors.confirmPassword}
+              />
             </div>
           </div>
-          <ButtonSubmit loading={loading} buttonName="تسجيل الدخول" />
+          <ButtonSubmit loading={loading} buttonName="تسجيل" />
           <AuthRedirect
-            qTxt="ليس لديك حساب؟"
-            redirectTxt="انشاء حساب"
-            redirectUrl="/register"
+            qTxt="لديك حساب بالفعل؟"
+            redirectTxt="سجل الدخول"
+            redirectUrl="/login"
           />
         </motion.form>
       </div>
@@ -79,4 +104,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;

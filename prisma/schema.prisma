@@ -12,7 +12,7 @@ model User {
   name          String
   email         String  @unique
   password      String
-  emailVerified Boolean
+  emailVerified Boolean @default(false)
   image         String?
 
   @@map("users")

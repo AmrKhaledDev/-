@@ -4,6 +4,7 @@
 import { useState } from "react";
 import FilterButtons from "./FilterButtons";
 import Products from "@/components/Products/Products";
+import { motion } from "framer-motion";
 // ==============================================================
 function ProductsWithFilter({
   products,
@@ -24,7 +25,14 @@ function ProductsWithFilter({
         setCategory={setCategory}
         category={category}
       />
-      <Products products={filteredProducts} />
+      <motion.div
+        initial={{ opacity: 0, y: 140 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+        viewport={{ once: true }}
+      >
+        <Products products={filteredProducts} />
+      </motion.div>
     </>
   );
 }

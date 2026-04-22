@@ -78,7 +78,7 @@ function Order() {
             <OrderFormField placeholder="العنوان الكامل" />
             <OrderFormField placeholder="المدينة" />
             <OrderFormField placeholder="رقم الهاتف" />
-            <button className="bg-linear-to-r from-indigo-600  to-pink-600 py-3 active:scale-96 mytransition rounded shadow cursor-pointer">
+            <button className="bgg-ip py-3 active:scale-96 mytransition rounded shadow cursor-pointer">
               تأكيد الطلب
             </button>
           </form>
