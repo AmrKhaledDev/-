@@ -9,6 +9,7 @@ import AlertMessage from "@/components/AlertMessage/AlertMessage";
 import { motion } from "framer-motion";
 import { RegisterErrors } from "@/lib/types";
 import { handleRegister } from "./_components/handleRegister";
+import AuthIcon from "@/components/AuthIcon/AuthIcon";
 // ============================
 function Register() {
   const router = useRouter();
@@ -48,9 +49,8 @@ function Register() {
           viewport={{ once: true }}
           className="p-5 ring ring-gray-50/15 bg-white/5 rounded-2xl max-w-110 shadow mx-auto flex flex-col items-center gap-5"
         >
-          <div className="ring ring-gray-50/15 p-3 rounded-2xl bg-white/5 -mt-20 shadow">
-            <UserPlus className="size-21 text-gray-200" />
-          </div>
+        
+          <AuthIcon Icon={UserPlus} />
           <h1 className="font-semibold text-2xl">انشاء حساب</h1>
           <div className="w-full flex flex-col gap-3">
             {errors.serverError && (

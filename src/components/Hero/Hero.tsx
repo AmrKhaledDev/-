@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 // ==============================================
 function Hero() {
   return (
-    <section className="h-[90vh] text-white">
+    <section className="h-[88vh] text-white">
       <div className="flex h-full justify-center items-center">
         <div className="flex flex-col gap-8">
           <motion.div
@@ -23,8 +23,7 @@ function Hero() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 1 }}
             viewport={{ once: true }}
-            title="اكتشف أحدث المنتجات
-مع أفضل التخفيضات!"
+            title="أكتشف أحدث المنتجات مع أفضل التخفيضات"
             className="font-extrabold text-5xl leading-snug"
           >
             اكتشف أحدث المنتجات <br /> مع أفضل التخفيضات!
@@ -48,7 +47,13 @@ function Hero() {
           transition={{ duration: 1 }}
           className="w-fit h-fit rounded-3xl overflow-hidden relative"
         >
-          <Image src={"/hero-bg.jpg"} alt="hero" width={400} height={400} />
+          <Image
+            src={"/hero-bg.jpg"}
+            alt="hero"
+            width={400}
+            height={400}
+            className="w-100 min-h-50"
+          />
           <span className="bg-red-400 py-1 text-sm px-3 rounded-full absolute top-2 left-2">
             خصم حتى 50%
           </span>

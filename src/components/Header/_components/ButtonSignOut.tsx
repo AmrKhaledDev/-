@@ -27,7 +27,7 @@ function ButtonSignOut({
     <button
       disabled={loading}
       onClick={handleSignOut}
-      className="bg-red-500/20 not-disabled:hover:bg-red-500/40 mytransition not-disabled:cursor-pointer rounded-md py-2 text-white shadow"
+      className="bg-red-500/20 sm:text-[15px] text-xs not-disabled:hover:bg-red-500/40 mytransition not-disabled:cursor-pointer rounded-md py-2 text-white shadow"
     >
       {loading ? "جاري الخروج . . ." : " تسجيل الخروج"}
     </button>

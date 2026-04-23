@@ -16,23 +16,23 @@ function AuthLinks() {
       icon: UserPlus,
       linkName: "انشاء حساب",
       href: "/register",
-      style: "bgg-ip",
+      style: "bgg-ip sm:flex hidden",
     },
   ];
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center sm:gap-3 gap-1.5">
       {authLinks.map((authLink) => (
         <React.Fragment key={authLink.id}>
           <Link
             title={authLink.linkName}
             href={authLink.href}
-            className={`flex items-center gap-1.5 hover:-rotate-2 flex-row-reverse py-2 px-4 rounded-lg shadow active:scale-95 mytransition 
+            className={`flex items-center gap-1.5 text-center sm:text-[15px] text-xs hover:-rotate-2 flex-row-reverse py-2 px-4 rounded-lg shadow active:scale-95 mytransition 
               ${authLink.style}`}
           >
             {authLink.linkName}
-            <authLink.icon size={20} />
+            <authLink.icon className="sm:size-5 size-4"/>
           </Link>
-          <span className="block h-5 w-[0.5px] bg-white/15 last:hidden rounded-lg" />
+          <span className="h-5 w-[0.5px] bg-white/15 last:hidden rounded-lg sm:block hidden" />
         </React.Fragment>
       ))}
     </div>

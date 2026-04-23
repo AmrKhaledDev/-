@@ -10,29 +10,29 @@ import UserMenu from "./_components/UserMenu";
 async function Header() {
   const userSession = await GetUserSession();
   return (
-    <header className="bg-linear-to-r py-2 to-indigo-900 from-pink-900 z-50 text-white sticky top-0 shadow border-b border-b-gray-50/20">
-      <div className="mycontainer flex items-center justify-between">
+    <header className="bg-linear-to-r sm:py-2 py-1.5 to-indigo-900 from-pink-900 z-50 text-white sticky top-0 shadow border-b border-b-gray-50/20">
+      <div className="mycontainer header_res flex items-center justify-between sm:flex-nowrap flex-wrap gap-5">
         <Link
           title="لُقطة"
           href={"/"}
-          className="flex items-center gap-1 text-xl"
+          className="flex items-center gap-1 text-xl shrink-0"
         >
-          <Image src={"/store-logo.png"} alt="logo" width={80} height={80} />
+          <Image src={"/store-logo.png"} alt="logo" width={80} height={80} className="sm:w-18 w-12 sm:h-14 h-10"/>
         </Link>
-        <div className="flex items-center gap-5">
+        <div className="flex items-center lg:flex-row flex-row-reverse sm:gap-5 gap-2">
           <MenuItems />
-          <div className="flex items-center gap-4">
+          <div className="flex items-center sm:gap-4 gap-2 sm:flex-nowrap flex-wrap">
             {userSession ? (
               <>
                 <Link href={"/cart"} className="relative">
-                  <ShoppingCart />
-                  <span className="absolute -top-2 -right-2 bg-red-500 shadow rounded-full size-4.5 text-sm font-serif flex items-center justify-center  text-white">
+                  <ShoppingCart className="sm:size-6 size-5"/>
+                  <span className="absolute -top-2 -right-2 bg-red-500 shadow rounded-full sm:size-4.5 size-3.5 text-sm font-serif flex items-center justify-center  text-white">
                     0
                   </span>
                 </Link>
                 <UserMenu userSession={userSession} />
-                <button className="mr-7 bg-white/15 hover:-rotate-3 ring hover:shadow-xl mytransition cursor-pointer font-bold ring-gray-50/30 py-2 px-6 rounded-md flex items-center gap-2 flex-row-reverse text-sm">
-                  لوحة التحكم <LayoutDashboard className="size-5" />
+                <button className="sm:mr-7 sm:text-[15px] text-xs bg-white/15 hover:-rotate-3 ring hover:shadow-xl mytransition cursor-pointer font-bold ring-gray-50/30 sm:py-2 py-1.5 sm:px-6 px-4 rounded-md flex items-center gap-2 flex-row-reverse sm:text-sm">
+                  لوحة التحكم <LayoutDashboard className="sm:size-5 size-4" />
                 </button>
               </>
             ) : (

@@ -29,7 +29,7 @@ function AuthFormField({
         <input
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="outline-none w-full py-2 px-4 cursor-pointer"
+          className="outline-none w-full py-2 px-4 cursor-pointer sm:text-[15px] text-sm"
           type={type}
           placeholder={placeholder}
         />
