@@ -1,0 +1,87 @@
+"use client";
+import { User } from "@prisma/client";
+import { User2 } from "lucide-react";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import ButtonSignOut from "./ButtonSignOut";
+import AlertMessage from "@/components/AlertMessage/AlertMessage";
+// =========================================
+function UserMenu({ userSession }: { userSession: User }) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  useEffect(() => {
+    const handle = (e: MouseEvent) => {
+      if (e.target instanceof Element) {
+        if (!e.target.closest(".buttonOpenMenu, .boxMenu"))
+          setIsMenuOpen(false);
+      }
+    };
+    document.addEventListener("click", handle);
+    return () => {
+      removeEventListener("click", handle);
+    };
+  }, []);
+  const [errorInSignOut, setErrorInSignOut] = useState("");
+
+  return (
+    <div className="relative">
+      <button
+        onClick={() => setIsMenuOpen(!isMenuOpen)}
+        className={`bg-white/5 ring buttonOpenMenu  ring-gray-50/20 rounded-full p-2 cursor-pointer hover:bg-white/15 mytransition hover:scale-105 hover:shadow-xl ${isMenuOpen && "shadow-xl"}`}
+      >
+        <User2 />
+      </button>
+      {isMenuOpen && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3 }}
+          className="absolute flex flex-col boxMenu backdrop-blur-2xl gap-3 p-4 text-nowrap ring ring-gray-50/20 bg-white/10 shadow-xl rounded-2xl w-60 mt-2 -right-5 text-white"
+        >
+          {errorInSignOut && (
+            <AlertMessage type="error" message={errorInSignOut} />
+          )}
+          <div className="flex items-center gap-2">
+            {userSession.image ? (
+              <Image
+                src={
+                  "https://i.pinimg.com/1200x/4a/87/fd/4a87fd3deb35395b73cbe656e00af4f3.jpg"
+                }
+                alt="image"
+                width={50}
+                height={50}
+                className="rounded-full shrink-0 size-10 object-cover"
+              />
+            ) : (
+              <div className="size-10 rounded-full capitalize flex items-center justify-center ring ring-gray-50/30 bg-white/10 font-bold text-xl">
+                {userSession.name.slice(0, 1)}
+              </div>
+            )}
+            <div>
+              <h2 className="text-sm font-semibold">{userSession.name}</h2>
+              <p className="text-xs font-normal text-gray-200">
+                {userSession.email}
+              </p>
+            </div>
+          </div>
+          <span className="bg-white/20 block w-full h-px rounded" />
+          <div className="flex flex-col text-sm gap-2">
+            <Link
+              href="/profile"
+              className="bg-black/20 text-center hover:bg-black/40 mytransition rounded-md py-2 text-white shadow"
+            >
+              الملف الشخصي
+            </Link>
+            <ButtonSignOut
+              setErrorInSignOut={setErrorInSignOut}
+              setIsMenuOpen={setIsMenuOpen}
+            />
+          </div>
+        </motion.div>
+      )}
+    </div>
+  );
+}
+
+export default UserMenu;

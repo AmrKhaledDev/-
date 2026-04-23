@@ -1,11 +1,11 @@
-"use client";
 import Link from "next/link";
 import product_1 from "../../../../assets/product_1.png";
 import ProductDetails from "./_components/ProductDetails/ProductDetails";
 import ProductOpinions from "./_components/ProductOpinions/ProductOpinions";
+import { GetUserSession } from "@/lib/GetUserSession";
 
 // ========================================================
-function Product() {
+async function Product() {
   const product = {
     _id: "1",
     name: "بلوزة مخططة أنيقة بأكمام رفرفة وياقة متداخلة",
@@ -34,24 +34,26 @@ function Product() {
       {
         id: "3",
         name: "Mohammed Gamal",
-        image:
-          "",
+        image: "",
         opinion: "خدمه ممتازه احسنتم!",
         star: 3,
       },
     ],
   };
+  const userSession = await GetUserSession();
   return (
     <main className="section-p text-white">
       <div className="mycontainer flex flex-col gap-10">
-        <Link
-          href={"/login"}
-          className="bg-white/5 ring ring-red-500/20 text-red-500 py-2 px-5 rounded text-sm text-center"
-        >
-          سجل الدخول لترك رأيك عن هذا المنتج
-        </Link>
+        {!userSession && (
+          <Link
+            href={"/login"}
+            className="bg-white/5 ring ring-red-500/20 text-red-500 py-2 px-5 rounded text-sm text-center"
+          >
+            سجل الدخول لترك رأيك عن هذا المنتج
+          </Link>
+        )}
         <ProductDetails product={product} />
-        <ProductOpinions users={product.users} />
+        <ProductOpinions users={product.users} userSession={userSession} />
       </div>
     </main>
   );
