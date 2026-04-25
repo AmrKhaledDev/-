@@ -2,7 +2,7 @@ import Link from "next/link";
 import product_1 from "../../../../assets/product_1.png";
 import ProductDetails from "./_components/ProductDetails/ProductDetails";
 import ProductOpinions from "./_components/ProductOpinions/ProductOpinions";
-import { GetUserSession } from "@/lib/GetUserSession";
+import { GetUserSession } from "@/lib/Sessions/GetUserSession";
 
 // ========================================================
 async function Product() {

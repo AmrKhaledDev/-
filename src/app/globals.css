@@ -25,8 +25,18 @@
 @utility bgg-ip {
   @apply bg-linear-to-r to-indigo-500 from-pink-500;
 }
-@media(max-width:300px){
-  .header_res{
+
+/* Css */
+.toast-font {
+  font-family: "Almarai", sans-serif;
+}
+@media (max-width: 300px) {
+  .header_res {
     justify-content: center;
+  }
+}
+@media (max-width: 360px) {
+  .products {
+    grid-template-columns: repeat(1, 1fr);
   }
 }

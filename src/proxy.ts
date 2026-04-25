@@ -1,5 +1,5 @@
 import { auth as proxy } from "@/auth";
-import { GetUserSession } from "./lib/GetUserSession";
+import { GetUserSession } from "./lib/Sessions/GetUserSession";
 import { NextResponse } from "next/server";
 // =============================================
 const authRoutes = ["/login", "/register"];
@@ -11,14 +11,7 @@ export default proxy(async (req) => {
     return NextResponse.redirect(new URL("/", req.nextUrl.origin));
   if (protectedRoutes.includes(pathname) && !userSession)
     return NextResponse.redirect(new URL("/login", req.nextUrl.origin));
-  
 });
 export const config = {
-  mathcer: [
-    "/login",
-    "/register",
-    "/cart",
-    "/profile",
-    "/order",
-  ],
+  mathcer: ["/login", "/register", "/cart", "/profile", "/order"],
 };

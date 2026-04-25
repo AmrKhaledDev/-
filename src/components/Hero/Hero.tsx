@@ -5,9 +5,9 @@ import { motion } from "framer-motion";
 // ==============================================
 function Hero() {
   return (
-    <section className="h-[88vh] text-white">
-      <div className="flex h-full justify-center items-center">
-        <div className="flex flex-col gap-8">
+    <section className="md:h-[88vh] min-h-screen text-white overflow-x-hidden md:pt-0 pt-3">
+      <div className="flex h-full justify-center items-center md:flex-row flex-col md:gap-0 gap-10">
+        <div className="flex flex-col md:gap-8 gap-4 items-center md:items-start">
           <motion.div
             initial={{ opacity: 0, x: 100 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -15,8 +15,8 @@ function Hero() {
             viewport={{ once: true }}
             className="flex flex-col"
           >
-            <span className="block size-4 bg-indigo-100 rounded-full animate-bounce" />
-            <span className="block w-25 h-1 bg-indigo-100 rounded-full" />
+            <span className="block lg:size-4 md:mx-0 mx-auto size-3 bg-indigo-100 rounded-full animate-bounce" />
+            <span className="block lg:w-25 w-22 sm:w-30 h-1 bg-indigo-100 rounded-full" />
           </motion.div>
           <motion.h1
             initial={{ opacity: 0, x: 150 }}
@@ -24,7 +24,7 @@ function Hero() {
             transition={{ duration: 1 }}
             viewport={{ once: true }}
             title="أكتشف أحدث المنتجات مع أفضل التخفيضات"
-            className="font-extrabold text-5xl leading-snug"
+            className="font-extrabold lg:text-5xl sm:text-4xl text-3xl leading-snug sm:text-start text-center"
           >
             اكتشف أحدث المنتجات <br /> مع أفضل التخفيضات!
           </motion.h1>
@@ -32,9 +32,10 @@ function Hero() {
             initial={{ opacity: 0, x: 200 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 1 }}
+            viewport={{ once: true }}
             title="تسوق الآن واستمتع بعروض لا تُفوّت على الإلكترونيات، الأزياء،
             والمنتجات المميزة. احصل على خصومات تصل حتى 50% لفترة محدودة!"
-            className="font-normal text-gray-300 w-[80%]"
+            className="font-normal text-gray-300 md:w-[80%] sm:w-[95%] md:text-start text-center"
           >
             تسوق الآن واستمتع بعروض لا تُفوّت على الإلكترونيات، الأزياء،
             والمنتجات المميزة. احصل على خصومات تصل حتى 50% لفترة محدودة!
@@ -45,6 +46,7 @@ function Hero() {
           initial={{ opacity: 0, x: -70 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 1 }}
+          viewport={{ once: true }}
           className="w-fit h-fit rounded-3xl overflow-hidden relative"
         >
           <Image
@@ -52,7 +54,7 @@ function Hero() {
             alt="hero"
             width={400}
             height={400}
-            className="w-100 min-h-50"
+            className="lg:w-100 sm:w-140 w-full sm:min-h-50 h-130 object-cover"
           />
           <span className="bg-red-400 py-1 text-sm px-3 rounded-full absolute top-2 left-2">
             خصم حتى 50%

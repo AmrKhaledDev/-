@@ -1,13 +1,22 @@
 import SectionHead from "@/components/SectionHead/SectionHead";
-import { all_products, categories } from "../../../assets/data";
 import ProductsWithFilter from "./_components/ProductsWithFilter";
+import { getCategories } from "@/lib/Db/getCategories";
+import { getProducts } from "@/lib/Db/getProducts";
+import { GetUserSession } from "@/lib/Sessions/GetUserSession";
 // ====================================================
-function Categories() {
+async function Categories() {
+  const categories = await getCategories();
+  const products = await getProducts();
+  const userSession = await GetUserSession();
   return (
     <main className="section-p">
       <div className="mycontainer text-white section-flex">
         <SectionHead title="تسوق حسب الفئة" />
-        <ProductsWithFilter categories={categories} products={all_products} />
+        <ProductsWithFilter
+          categories={categories}
+          products={products}
+          userSession={userSession}
+        />
       </div>
     </main>
   );

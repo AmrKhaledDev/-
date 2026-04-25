@@ -3,6 +3,7 @@ import { Almarai } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
+import { ToastContainer } from "react-toastify";
 // ================================================================
 const almarai = Almarai({
   subsets: ["arabic"],
@@ -24,6 +25,7 @@ export default function RootLayout({
         dir="rtl"
         className="min-h-full flex flex-col bg-linear-to-r to-indigo-950 from-pink-950 [word-break:break-word]"
       >
+        <ToastContainer />
         <Header />
         {children}
         <Footer />

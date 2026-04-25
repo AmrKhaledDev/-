@@ -6,20 +6,127 @@ datasource db {
   provider = "postgresql"
 }
 
-// Models
+// =============================================== Enums
+enum Role {
+  USER
+  ADMIN
+}
+
+enum ProductStatus {
+  IN_CART
+  ORDERED
+  CANCELLED
+}
+
+enum OrderStatus {
+  PENDING // قيد الانتظار
+  CONFIRMED // تم التأكيد
+  SHIPPED // تم الشحن
+  DELIVERED // تم التوصيل
+  CANCELLED // ملغي
+  REFUNDED // مسترجع
+}
+
+// =============================================== Models
 model User {
-  id            String  @id @default(cuid())
+  id            String        @id @default(cuid())
   name          String
-  email         String  @unique
+  email         String        @unique
   password      String
-  emailVerified Boolean @default(false)
+  emailVerified Boolean       @default(false)
   image         String?
   phone         String?
   country       String?
   city          String?
   address       String?
+  role          Role          @default(USER)
+  opinions      Opinion[]
+  userProducts  UserProduct[]
+  likes         Like[]
+  orders        Order[]
 
   @@map("users")
+}
+
+model Product {
+  id            String         @id @default(cuid())
+  name          String
+  price         Float
+  stock         Float
+  min_stock     Float
+  description   String
+  categoryId    String
+  category      Category       @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  productImages ProductImage[]
+  createdAt     DateTime       @default(now())
+  opinions      Opinion[]
+  userProducts  UserProduct[]
+}
+
+model ProductImage {
+  id        String  @id @default(cuid())
+  image     String
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  name      String
+  products  Product[]
+  createdAt DateTime  @default(now())
+}
+
+model Opinion {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  opinion   String
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  rating    Int
+  createdAt DateTime @default(now())
+  likes     Like[]
+}
+
+model Like {
+  id        String  @id @default(cuid())
+  userId    String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  opinionId String
+  opinion   Opinion @relation(fields: [opinionId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, opinionId])
+}
+
+model UserProduct {
+  id         String        @id @default(cuid())
+  userId     String
+  user       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId  String
+  product    Product       @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity   Int           @default(1)
+  size       String?
+  color      String?
+  priceAtAdd Float
+  status     ProductStatus @default(IN_CART)
+  createdAt  DateTime      @default(now())
+  order      Order?        @relation(fields: [orderId], references: [id])
+  orderId    String?
+
+  @@unique([userId, productId, status, color, size])
+}
+
+model Order {
+  id         String        @id @default(cuid())
+  userId     String
+  user       User          @relation(fields: [userId], references: [id])
+  totalPrice Float
+  address    String
+  phone      String
+  status     OrderStatus   @default(PENDING)
+  items      UserProduct[]
+  createdAt  DateTime      @default(now())
 }
 
 model VerificationToken {

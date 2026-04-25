@@ -1,23 +1,25 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState } from "react";
 import FilterButtons from "./FilterButtons";
 import Products from "@/components/Products/Products";
-import { motion } from "framer-motion";
+import { ProductDbType } from "@/lib/types";
+import { Category, User } from "@prisma/client";
 // ==============================================================
 function ProductsWithFilter({
   products,
   categories,
+  userSession,
 }: {
-  products: any[];
-  categories: any[];
+  products: ProductDbType[];
+  categories: Category[];
+  userSession: User | null;
 }) {
   const [category, setCategory] = useState("all");
   const filteredProducts =
     category === "all"
       ? products
-      : products.filter((p) => p.category === category);
+      : products.filter((p) => p.category.id === category);
   return (
     <>
       <FilterButtons
@@ -25,14 +27,8 @@ function ProductsWithFilter({
         setCategory={setCategory}
         category={category}
       />
-      <motion.div
-        initial={{ opacity: 0, y: 140 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        viewport={{ once: true }}
-      >
-        <Products products={filteredProducts} />
-      </motion.div>
+
+      <Products products={filteredProducts} userSession={userSession} />
     </>
   );
 }

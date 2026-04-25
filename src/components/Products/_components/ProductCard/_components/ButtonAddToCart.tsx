@@ -1,0 +1,56 @@
+"use client";
+
+import { CreateUserProduct } from "@/lib/Server_Actions/Create_Actions/CreateUserProduct";
+import { User } from "@prisma/client";
+import { ShoppingBag } from "lucide-react";
+import { redirect, useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "react-toastify";
+// =================================================================
+function ButtonAddToCart({
+  userSession,
+  productId,
+}: {
+  userSession: User | null;
+  productId: string;
+}) {
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const AddToCart = async () => {
+    try {
+      setLoading(true);
+      if (!userSession) {
+        toast.error("سجل الدخول لإضافة المنتج");
+        return redirect("/login");
+      }
+      const result = await CreateUserProduct(userSession.id, productId);
+      if (!result.success)
+        return toast.error(result.message, { className: "toast-font" });
+      toast.success(result.message, { className: "toast-font" });
+      router.refresh();
+    } catch (error) {
+      console.log(error);
+      toast.error("حدث خطأ غير متوقع", { className: "toast-font" });
+    } finally {
+      setLoading(false);
+    }
+  };
+  return (
+    <button
+      disabled={loading}
+      onClick={AddToCart}
+      className="flex items-center cursor-pointer hover:scale-105 mytransition not-disabled:bgg-ip py-2 px-4 rounded-md gap-2 font-semibold sm:text-sm text-xs"
+    >
+      {loading ? (
+        <div className="border-2 rounded-full border-t-transparent border-indigo-300 animate-spin size-5"/>
+      ) : (
+        <>
+          {" "}
+          <ShoppingBag className="sm:size-4.5 size-3.5" /> اضف
+        </>
+      )}
+    </button>
+  );
+}
+
+export default ButtonAddToCart;

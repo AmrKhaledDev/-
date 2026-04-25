@@ -15,14 +15,14 @@ function Links() {
       <Link
         href={""}
         title="تسوق الآن"
-        className="flex items-center gap-2 w-fit bg-indigo-500 py-3 px-6 rounded-md font-semibold shadow hover:scale-105 active:scale-95 mytransition"
+        className="flex sm:text-[15px] text-xs items-center gap-2 w-fit bg-indigo-500 sm:py-3 py-2 sm:px-6 px-5 rounded-md font-semibold shadow hover:scale-105 active:scale-95 mytransition"
       >
-        تسوق الآن <ShoppingCart />
+        تسوق الآن <ShoppingCart className="md:size-6 size-4.5"/>
       </Link>
       <Link
         href={"/categories"}
         title="تصفح الفئات"
-        className="w-fit ring ring-gray-50/20 bg-white/5 py-3 px-6 rounded-md font-semibold shadow mytransition hover:scale-105 active:scale-95"
+        className="w-fit sm:text-[15px] text-xs ring ring-gray-50/20 bg-white/5 sm:py-3 py-2 sm:px-6 px-5 rounded-md font-semibold shadow mytransition hover:scale-105 active:scale-95"
       >
         تصفح الفئات
       </Link>

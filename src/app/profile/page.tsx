@@ -1,4 +1,4 @@
-import { GetUserSession } from "@/lib/GetUserSession";
+import { GetUserSession } from "@/lib/Sessions/GetUserSession";
 import product_5 from "../../../assets/product_5.png";
 import product_6 from "../../../assets/product_6.png";
 import product_7 from "../../../assets/product_7.png";

@@ -28,7 +28,7 @@ function UserMenu({ userSession }: { userSession: User }) {
     <div className="relative">
       <button
         onClick={() => setIsMenuOpen(!isMenuOpen)}
-        className={`bg-white/5 ring buttonOpenMenu  ring-gray-50/20 rounded-full sm:p-2 p-1.5 cursor-pointer hover:bg-white/15 mytransition hover:scale-105 hover:shadow-xl ${isMenuOpen && "shadow-xl"}`}
+        className={`bg-white/5 ring buttonOpenMenu  ring-gray-50/20 rounded-full sm:p-2 p-1.5 cursor-pointer hover:bg-white/15 mytransition hover:scale-105 hover:shadow-xl ${isMenuOpen && "shadow-xl shadow-gray-50/20 bg-white/15 "}`}
       >
         <User2 className="sm:size-5 size-4"/>
       </button>

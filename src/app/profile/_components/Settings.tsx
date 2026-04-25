@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import ProfileFormField from "./ProfileFormField";
-import { GetUserSession } from "@/lib/GetUserSession";
+import { GetUserSession } from "@/lib/Sessions/GetUserSession";
 import { User } from "@prisma/client";
 // ===================================================================================
 function Settings() {

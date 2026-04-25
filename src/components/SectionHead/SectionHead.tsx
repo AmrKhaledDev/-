@@ -16,8 +16,8 @@ function SectionHead({
       viewport={{ once: true }}
       className="w-full flex flex-col items-center justify-center gap-3"
     >
-      <h1 className="text-4xl font-extrabold text-white">{title}</h1>
-      {subtitle && <p className="font-normal text-gray-300">{subtitle}</p>}
+      <h1 className="md:text-4xl sm:text-3xl text-2xl font-extrabold text-white">{title}</h1>
+      {subtitle && <p className="font-normal text-gray-300 sm:text-[15px] text-xs sm:text-start text-center">{subtitle}</p>}
     </motion.div>
   );
 }

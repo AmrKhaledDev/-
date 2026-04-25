@@ -35,7 +35,7 @@ function MenuItems() {
   return (
     <nav>
       <ul
-        className={`flex items-center lg:gap-1 lg:left-0 sm:gap-7 gap-4 boxMenu lg:relative fixed top-0 lg:bg-transparent lg:ring-transparent backdrop-blur sm:w-60 w-50 px-5 lg:w-fit lg:px-0 z-30 lg:justify-start mytransition justify-center lg:flex-row flex-col  h-screen lg:h-fit bg-white/5 ring ring-gray-50/25 ${showMenu ? "left-0" : "-left-600"}`}
+        className={`flex items-center lg:gap-1 lg:left-0 sm:gap-7 gap-4 boxMenu lg:relative fixed top-0 lg:bg-transparent lg:ring-transparent backdrop-blur-xl sm:w-60 w-50 px-5 lg:w-fit lg:px-0 z-30 lg:justify-start mytransition justify-center lg:flex-row flex-col h-screen lg:h-fit bg-white/5 ring ring-gray-50/10 ${showMenu ? "left-0" : "-left-600"}`}
       >
         {links.map((link) => (
           <li key={link.id} className="w-full lg:w-fit">
