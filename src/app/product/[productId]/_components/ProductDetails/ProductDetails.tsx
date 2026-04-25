@@ -1,38 +1,99 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { formatCurrency } from "@/lib/formatCurrency";
-import {  ShoppingBag } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 import { useState } from "react";
 import ProductImage from "./_components/ProductImage";
-import ProductColors from "./_components/ProductColors";
-import ProductSizes from "../ProductSizes";
 import ProductQuantity from "./_components/ProductQuantity";
 import ProductCategory from "./_components/ProductCategory";
+import { ProductDbType, UserSessionWithRelations } from "@/lib/types";
+import { Check } from "lucide-react";
+import { CreateUserProductAction } from "@/lib/Server_Actions/Create_Actions/CreateUserProduct.action";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import Loader from "@/components/Loader/Loader";
+import ProductInfo from "./_components/ProductInfo";
+import Image from "next/image";
 // ===============================================================
-function ProductDetails({ product }: { product: any }) {
-  const colors = ["blue", "black", "white"];
-  const sizes = ["S", "M", "L", "XL"];
-  const [color, setColor] = useState("blue");
-  const [size, setSize] = useState("S");
+function ProductDetails({
+  product,
+  userSession,
+}: {
+  product: ProductDbType;
+  userSession: UserSessionWithRelations | null;
+}) {
+  const [productImage, setProductImage] = useState(
+    product.productImages[0].image,
+  );
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const existingItem = userSession?.userProducts.find(
+    (p) => p.productId === product.id,
+  );
+  const handle = async () => {
+    if (!userSession) return;
+    setLoading(true);
+    const result = await CreateUserProductAction(
+      userSession.id,
+      product.id,
+      quantity,
+    );
+    if (!result.success)
+      return toast.error(result.message, { className: "toast-font" });
+    toast.success(result.message, { className: "toast-font" });
+    router.refresh();
+  };
   return (
-    <div className="flex justify-between ring ring-gray-50/20 bg-white/5 p-5 rounded-2xl gap-6 min-h-100">
-      <ProductImage product={product} />
-      <div className="flex-1 flex flex-col gap-5">
-        <h2 className="font-semibold text-4xl">{product.name}</h2>
-        <p className="text-gray-300 font-normal text-sm">
-          {product.description}
-        </p>
-        <p className="text-[#47b7e9] font-extrabold text-xl">
-          {formatCurrency.format(product.price)}
-        </p>
-        <ProductCategory category={product.category} />
-        <ProductColors color={color} setColor={setColor} colors={colors} />
-        <ProductSizes setSize={setSize} size={size} sizes={sizes} />
-        <ProductQuantity quantity={quantity} setQuantity={setQuantity} />
-        <button className="py-2 bgg-ip select-none rounded cursor-pointer flex items-center gap-2 justify-center font-semibold">
-          أضف الى العربة <ShoppingBag />
-        </button>
+    <div className="ring ring-gray-50/20 bg-white/5 p-5 rounded-2xl gap-4 min-h-100 flex flex-col">
+      {existingItem && (
+        <h2 className="flex items-center gap-2 font-bold text-green-400 flex-row-reverse text-sm w-fit">
+          هذا المنتج في العربة <Check className="text-green-400 size-5" />
+        </h2>
+      )}
+      <div className="flex justify-between gap-6 ">
+        <div className="flex gap-2">
+          {product.productImages.length > 1 && (
+            <div className="flex flex-col gap-2">
+              {product.productImages.map((image) => (
+                <Image
+                  onClick={() => setProductImage(image.image)}
+                  key={image.id}
+                  src={image.image}
+                  alt="product image"
+                  width={50}
+                  height={50}
+                  className="object-contain size-20 bg-white rounded-lg cursor-pointer"
+                />
+              ))}
+            </div>
+          )}
+          <ProductImage image={productImage} />
+        </div>
+        <div className="flex-1 flex flex-col gap-3">
+          <ProductInfo product={product} />
+          <ProductCategory category={product.category.name} />
+          {!existingItem && (
+            <ProductQuantity
+              quantity={quantity}
+              setQuantity={setQuantity}
+              product={product}
+            />
+          )}
+          {!existingItem && (
+            <button
+              disabled={loading}
+              onClick={handle}
+              className="py-2 not-disabled:bgg-ip disabled:bg-gray-100 select-none rounded not-disabled:cursor-pointer flex items-center gap-2 justify-center font-semibold"
+            >
+              {loading ? (
+                <Loader />
+              ) : (
+                <>
+                  أضف الى العربة <ShoppingBag />
+                </>
+              )}
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

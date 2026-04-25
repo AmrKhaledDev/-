@@ -3,6 +3,7 @@ import { GetUserSessionWithRelations } from "@/lib/Sessions/GetUserSessionWithRe
 import TotalPrice from "./_components/TotalPrice";
 import { redirect } from "next/navigation";
 import Products from "./_components/Products";
+import Link from "next/link";
 // ====================================================
 async function Cart() {
   const userSession = await GetUserSessionWithRelations();
@@ -15,8 +16,22 @@ async function Cart() {
     <main className="section-p text-white">
       <div className="mycontainer section-flex">
         <SectionHead title="سلة التسوق الخاص بك" />
-        <Products products={userSession.userProducts} />
-        <TotalPrice totalPrice={Number(totalPrice)} />
+        {userSession.userProducts.length < 1 ? (
+          <p className="text-center text-gray-400">
+            لا يوجد منتجات في السلة
+            <Link
+              href={"/categories"}
+              className="mr-1 font-semibold text-blue-400 underline hover:no-underline"
+            >
+              تسوق الآن
+            </Link>
+          </p>
+        ) : (
+          <>
+            <Products products={userSession.userProducts} />
+            <TotalPrice totalPrice={Number(totalPrice)} />
+          </>
+        )}
       </div>
     </main>
   );

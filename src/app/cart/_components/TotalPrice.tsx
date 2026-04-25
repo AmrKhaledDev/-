@@ -1,5 +1,6 @@
 import { formatCurrency } from "@/lib/formatCurrency";
 import { CreditCard } from "lucide-react";
+import Link from "next/link";
 // ====================================================
 function TotalPrice({ totalPrice }: { totalPrice: number }) {
   return (
@@ -10,9 +11,12 @@ function TotalPrice({ totalPrice }: { totalPrice: number }) {
           {formatCurrency.format(totalPrice)}
         </span>
       </h2>
-      <button className="bg-linear-to-r hover:scale-103 active:scale-90 mytransition from-indigo-500 to-pink-500 py-3 px-4 rounded-md shadow font-semibold flex items-center gap-2 cursor-pointer">
+      <Link
+        href={"/order"}
+        className="bg-linear-to-r hover:scale-103 active:scale-90 mytransition from-indigo-500 to-pink-500 py-3 px-4 rounded-md shadow font-semibold flex items-center gap-2 cursor-pointer"
+      >
         متابعة الشراء <CreditCard />
-      </button>
+      </Link>
     </div>
   );
 }

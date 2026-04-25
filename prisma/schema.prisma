@@ -56,6 +56,10 @@ model Product {
   min_stock     Float
   description   String
   categoryId    String
+  warranty      String?
+  returnPolicy  String?
+  shippingInfo  String?
+  isOriginal    Boolean?
   category      Category       @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   productImages ProductImage[]
   createdAt     DateTime       @default(now())
@@ -106,15 +110,13 @@ model UserProduct {
   productId  String
   product    Product       @relation(fields: [productId], references: [id], onDelete: Cascade)
   quantity   Int           @default(1)
-  size       String?
-  color      String?
   priceAtAdd Float
   status     ProductStatus @default(IN_CART)
   createdAt  DateTime      @default(now())
   order      Order?        @relation(fields: [orderId], references: [id])
   orderId    String?
 
-  @@unique([userId, productId, status, color, size])
+  @@unique([userId, productId, status])
 }
 
 model Order {

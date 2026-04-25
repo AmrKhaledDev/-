@@ -15,3 +15,8 @@ export type ProductDbType = Prisma.ProductGetPayload<{
     category: true;
   };
 }>;
+export type UserSessionWithRelations = Prisma.UserGetPayload<{
+  include: {
+    userProducts: true;
+  };
+}>;

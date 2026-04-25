@@ -25,7 +25,9 @@
 @utility bgg-ip {
   @apply bg-linear-to-r to-indigo-500 from-pink-500;
 }
-
+@utility btnQty {
+  @apply size-8 rounded-full p-2 bg-white/10 hover:bg-white/20 mytransition ring shadow ring-gray-50/20 flex items-center justify-center cursor-pointer active:scale-97;
+}
 /* Css */
 .toast-font {
   font-family: "Almarai", sans-serif;

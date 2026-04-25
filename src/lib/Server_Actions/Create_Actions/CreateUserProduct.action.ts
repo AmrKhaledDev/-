@@ -1,12 +1,11 @@
 "use server";
 import { prisma } from "@/lib/prisma";
 // ====================================================
-export const CreateUserProduct = async (
+export const CreateUserProductAction = async (
   userId: string,
   productId: string,
   quantity: number = 1,
-  size?: string,
-  color?: string,
+  
 ): Promise<{ success: boolean; message: string }> => {
   try {
     if (!userId || !productId)
@@ -30,8 +29,6 @@ export const CreateUserProduct = async (
         userId,
         productId,
         status: "IN_CART",
-        size: size || null,
-        color: color || null,
       },
     });
     if (existingItem) {
@@ -54,8 +51,6 @@ export const CreateUserProduct = async (
           userId,
           productId,
           quantity,
-          size: size || null,
-          color: color || null,
           priceAtAdd: product.price,
         },
       });

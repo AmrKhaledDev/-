@@ -19,6 +19,9 @@ export const GetUserSessionWithRelations = async () => {
                 },
               },
             },
+            orderBy: {
+              createdAt: "desc",
+            },
           },
         },
       });

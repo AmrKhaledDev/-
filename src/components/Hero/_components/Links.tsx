@@ -13,7 +13,7 @@ function Links() {
       className="flex items-center gap-3"
     >
       <Link
-        href={""}
+        href={"/categories"}
         title="تسوق الآن"
         className="flex sm:text-[15px] text-xs items-center gap-2 w-fit bg-indigo-500 sm:py-3 py-2 sm:px-6 px-5 rounded-md font-semibold shadow hover:scale-105 active:scale-95 mytransition"
       >

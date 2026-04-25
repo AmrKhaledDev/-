@@ -9,6 +9,10 @@ import { GetUserSessionWithRelations } from "@/lib/Sessions/GetUserSessionWithRe
 // ===========================================================
 async function Header() {
   const userSession = await GetUserSessionWithRelations();
+  const totalProducts = userSession?.userProducts.reduce(
+    (acc, p) => acc + p.quantity,
+    0,
+  );
   return (
     <header className="bg-linear-to-r sm:py-2 py-1.5 to-indigo-900 from-pink-900 z-50 text-white sticky top-0 shadow border-b border-b-gray-50/20">
       <div className="mycontainer header_res flex items-center justify-between sm:flex-nowrap flex-wrap gap-5">
@@ -32,8 +36,8 @@ async function Header() {
               <>
                 <Link href={"/cart"} className="relative">
                   <ShoppingCart className="sm:size-6 size-5" />
-                  <span className="absolute -top-2 -right-2 bg-red-500 shadow rounded-full sm:size-4.5 size-3.5 text-sm font-serif flex items-center justify-center  text-white">
-                    {userSession.userProducts.length}
+                  <span className="absolute -top-2 -right-2 bg-red-500 shadow rounded-full sm:size-4.5 size-3.5 text-sm flex items-center justify-center  text-white">
+                    {totalProducts}
                   </span>
                 </Link>
                 <UserMenu userSession={userSession} />

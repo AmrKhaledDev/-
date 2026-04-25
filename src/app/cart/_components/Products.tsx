@@ -34,7 +34,10 @@ function Products({ products }: { products: Products[] }) {
               <p className="text-[#00d3f3] font-extrabold text-xl">
                 {formatCurrency.format(product.priceAtAdd)}
               </p>
-              <ProductActions quantity={product.quantity} />
+              <ProductActions
+                quantity={product.quantity}
+                productId={product.id}
+              />
             </div>
           </div>
         </div>

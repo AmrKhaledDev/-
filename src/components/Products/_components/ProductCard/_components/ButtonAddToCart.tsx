@@ -1,6 +1,7 @@
 "use client";
 
-import { CreateUserProduct } from "@/lib/Server_Actions/Create_Actions/CreateUserProduct";
+import Loader from "@/components/Loader/Loader";
+import { CreateUserProductAction } from "@/lib/Server_Actions/Create_Actions/CreateUserProduct.action";
 import { User } from "@prisma/client";
 import { ShoppingBag } from "lucide-react";
 import { redirect, useRouter } from "next/navigation";
@@ -23,7 +24,7 @@ function ButtonAddToCart({
         toast.error("سجل الدخول لإضافة المنتج");
         return redirect("/login");
       }
-      const result = await CreateUserProduct(userSession.id, productId);
+      const result = await CreateUserProductAction(userSession.id, productId);
       if (!result.success)
         return toast.error(result.message, { className: "toast-font" });
       toast.success(result.message, { className: "toast-font" });
@@ -42,10 +43,9 @@ function ButtonAddToCart({
       className="flex items-center cursor-pointer hover:scale-105 mytransition not-disabled:bgg-ip py-2 px-4 rounded-md gap-2 font-semibold sm:text-sm text-xs"
     >
       {loading ? (
-        <div className="border-2 rounded-full border-t-transparent border-indigo-300 animate-spin size-5"/>
+        <Loader />
       ) : (
         <>
-          {" "}
           <ShoppingBag className="sm:size-4.5 size-3.5" /> اضف
         </>
       )}
