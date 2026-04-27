@@ -1,9 +1,9 @@
+import { prisma } from "@/lib/prisma";
+import { GetUserSessionWithRelations } from "@/lib/Sessions/GetUserSessionWithRelations";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import ProductDetails from "./_components/ProductDetails/ProductDetails";
 import ProductOpinions from "./_components/ProductOpinions/ProductOpinions";
-import { prisma } from "@/lib/prisma";
-import { redirect } from "next/navigation";
-import { GetUserSessionWithRelations } from "@/lib/Sessions/GetUserSessionWithRelations";
 // ========================================================
 async function Product({ params }: { params: Promise<{ productId: string }> }) {
   const userSession = await GetUserSessionWithRelations();
@@ -15,6 +15,19 @@ async function Product({ params }: { params: Promise<{ productId: string }> }) {
     include: {
       productImages: true,
       category: true,
+      opinions: {
+        include: {
+          user: true,
+          likes: {
+            include: {
+              user: true,
+            },
+          },
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      },
     },
   });
   if (!product) return redirect("/categories");
@@ -30,7 +43,11 @@ async function Product({ params }: { params: Promise<{ productId: string }> }) {
           </Link>
         )}
         <ProductDetails product={product} userSession={userSession} />
-        {/* <ProductOpinions users={product.users} userSession={userSession} /> */}
+        <ProductOpinions
+          opinions={product.opinions}
+          userSession={userSession}
+          productId={product.id}
+        />
       </div>
     </main>
   );

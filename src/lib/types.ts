@@ -20,3 +20,13 @@ export type UserSessionWithRelations = Prisma.UserGetPayload<{
     userProducts: true;
   };
 }>;
+export type OpinionsDbType = Prisma.OpinionGetPayload<{
+  include: {
+    user: true;
+    likes: {
+      include: {
+        user: true;
+      };
+    };
+  };
+}>;
