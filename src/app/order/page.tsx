@@ -6,7 +6,12 @@ import { GetUserSessionWithRelations } from "@/lib/Sessions/GetUserSessionWithRe
 import { redirect } from "next/navigation";
 import OrderForm from "./_components/OrderForm";
 import Orders from "./_components/Orders";
+import { Metadata } from "next";
 // =============================================================
+export const metadata: Metadata = {
+  title: "إتمام الطلب",
+  description: "أدخل بياناتك لإنشاء طلب جديد في متجر لُقطة وإتمام عملية الشراء بسهولة.",
+};
 async function Order() {
   const userSession = await GetUserSessionWithRelations();
   if (!userSession) return redirect("/login");

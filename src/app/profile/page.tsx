@@ -2,7 +2,12 @@ import ProfileDetails from "./_components/ProfileDetails";
 import { redirect } from "next/navigation";
 import { GetUserSessionWithRelations } from "@/lib/Sessions/GetUserSessionWithRelations";
 import { prisma } from "@/lib/prisma";
+import { Metadata } from "next";
 // ================================================================
+export const metadata: Metadata = {
+  title: "الملف الشخصي",
+  description: "إدارة حسابك في متجر لُقطة وتحديث بياناتك بسهولة.",
+};
 async function Profile() {
   const userSession = await GetUserSessionWithRelations();
   if (!userSession) return redirect("/login");

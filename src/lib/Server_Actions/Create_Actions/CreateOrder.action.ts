@@ -16,6 +16,19 @@ export const CreateOrderAction = async (
     const userSession = await GetUserSession();
     if (!userSession)
       return { success: false, message: "فشل انشاء طلبك تأكد من تسجيل دخولك" };
+    const userOrdersPendding = await prisma.order.count({
+      where: {
+        userId: userSession.id,
+        status: {
+          in: ["SHIPPED", "PENDING", "CONFIRMED"],
+        },
+      },
+    });
+    if (userSession.role !== "SELLER" && userOrdersPendding >= 2)
+      return {
+        success: false,
+        message: "برجاء إنتظار طلباتك السابقة قبل إتمام طلب جديد",
+      };
     const userProducts = await prisma.userProduct.findMany({
       where: {
         userId: userSession.id,
@@ -33,10 +46,22 @@ export const CreateOrderAction = async (
         },
       },
     });
+    if (userProducts.length >= 5)
+      return {
+        success: false,
+        message:
+          "عذراً، الحد الأقصى لأنواع المنتجات في الطلب الواحد هو 5 أنواع فقط.",
+      };
     if (userProducts.length < 1)
       return {
         success: false,
         message: "برجاء إضافة منتجات إلى السلة أولاً قبل الشراء",
+      };
+    const totalQuantity = userProducts.reduce((acc, p) => acc + p.quantity, 0);
+    if (userSession.role !== "SELLER" && totalQuantity > 10)
+      return {
+        success: false,
+        message: "عذراً، لا يمكنك طلب أكثر من 10 قطع في الأوردر الواحد.",
       };
     const subtotal = userProducts.reduce(
       (acc, p) => acc + p.priceAtAdd * p.quantity,

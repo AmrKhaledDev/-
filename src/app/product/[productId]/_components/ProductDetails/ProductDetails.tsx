@@ -8,7 +8,7 @@ import { ProductDbType, UserSessionWithRelations } from "@/lib/types";
 import { Check } from "lucide-react";
 import { CreateUserProductAction } from "@/lib/Server_Actions/Create_Actions/CreateUserProduct.action";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import Loader from "@/components/Loader/Loader";
 import ProductInfo from "./_components/ProductInfo";
 import Image from "next/image";
@@ -30,7 +30,7 @@ function ProductDetails({
     (p) => p.productId === product.id,
   );
   const handle = async () => {
-    if (!userSession) return;
+    if (!userSession) return redirect("/login");
     setLoading(true);
     const result = await CreateUserProductAction(
       userSession.id,

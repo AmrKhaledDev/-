@@ -45,23 +45,31 @@ function OpinionActions({
   return (
     <div className="flex items-center gap-2">
       <ButtonLike userSession={userSession} opinion={opinion} />
-      <button
-        onClick={DeleteOpinion || editLoading}
-        disabled={deleteLoading}
-        className="cursor-pointer hover:scale-103 mytransition active:scale-95 text-slate-500 hover:text-slate-400"
-      >
-        {deleteLoading ? (
-          <div className="border-2 size-3.5 rounded-full border-t-transparent border-red-600 animate-spin" />
-        ) : (
-          <Trash className="size-4" />
-        )}
-      </button>
-      <button
-        onClick={() => setIsEditOpinion((prev) => (prev === opinion.id? "" : opinion.id))}
-        className="cursor-pointer buttonEdit hover:scale-103 mytransition active:scale-95 text-slate-500 hover:text-slate-400"
-      >
-        <Edit className="size-4" />
-      </button>
+      {userSession?.id === opinion.userId && (
+        <>
+          <button
+            onClick={DeleteOpinion || editLoading}
+            disabled={deleteLoading}
+            className="cursor-pointer hover:scale-103 mytransition active:scale-95 text-slate-500 hover:text-slate-400"
+          >
+            {deleteLoading ? (
+              <div className="border-2 size-3.5 rounded-full border-t-transparent border-red-600 animate-spin" />
+            ) : (
+              <Trash className="size-4" />
+            )}
+          </button>
+          <button
+            onClick={() =>
+              setIsEditOpinion((prev) =>
+                prev === opinion.id ? "" : opinion.id,
+              )
+            }
+            className="cursor-pointer buttonEdit hover:scale-103 mytransition active:scale-95 text-slate-500 hover:text-slate-400"
+          >
+            <Edit className="size-4" />
+          </button>
+        </>
+      )}
     </div>
   );
 }

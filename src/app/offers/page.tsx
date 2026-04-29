@@ -1,6 +1,11 @@
 import Products from "@/components/Products/Products";
 import SectionHead from "@/components/SectionHead/SectionHead";
+import { Metadata } from "next";
 // =================================================================
+export const metadata: Metadata = {
+  title: "الخصومات",
+  description: "اكتشف أحدث الخصومات والعروض في متجر لُقطة ووفّر على مشترياتك من مختلف المنتجات بأسعار مميزة لفترة محدودة.",
+};
 function Offers() {
   return (
     <main className="section-p">

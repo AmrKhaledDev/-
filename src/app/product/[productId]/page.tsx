@@ -4,7 +4,30 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import ProductDetails from "./_components/ProductDetails/ProductDetails";
 import ProductOpinions from "./_components/ProductOpinions/ProductOpinions";
+import { Metadata } from "next";
 // ========================================================
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ productId: string }>;
+}): Promise<Metadata> {
+  const { productId } = await params;
+  if (!productId)
+    return { title: "المنتج غير موجود", description: "هذا المنتج غير موجود" };
+  const product = await prisma.product.findUnique({
+    where: {
+      id: productId,
+    },
+    select: { name: true, description: true },
+  });
+  if (!product)
+    return { title: "المنتج غير موجود", description: "هذا المنتج غير موجود" };
+  return {
+    title: product.name,
+    description: product.description,
+    icons: "/fav-icon.png",
+  };
+}
 async function Product({ params }: { params: Promise<{ productId: string }> }) {
   const userSession = await GetUserSessionWithRelations();
   const { productId } = await params;
@@ -37,7 +60,7 @@ async function Product({ params }: { params: Promise<{ productId: string }> }) {
         {!userSession && (
           <Link
             href={"/login"}
-            className="bg-white/5 ring ring-red-500/20 text-red-500 py-2 px-5 rounded text-sm text-center"
+            className="shadow ring ring-indigo-500/30 text-indigo-500 py-2 px-5 rounded text-sm text-center"
           >
             سجل الدخول لترك رأيك عن هذا المنتج
           </Link>

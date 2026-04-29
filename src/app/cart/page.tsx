@@ -4,7 +4,12 @@ import TotalPrice from "./_components/TotalPrice";
 import { redirect } from "next/navigation";
 import Products from "./_components/Products";
 import Link from "next/link";
+import { Metadata } from "next";
 // ====================================================
+export const metadata: Metadata = {
+  title: "سلة التسوق",
+  description: "استعرض المنتجات التي أضفتها إلى سلة التسوق في متجر لُقطة وقم بمراجعتها قبل إتمام الطلب.",
+};
 async function Cart() {
   const userSession = await GetUserSessionWithRelations();
   if (!userSession) return redirect("/login");
