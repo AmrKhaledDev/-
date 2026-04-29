@@ -10,7 +10,8 @@ function Tabs({
   setActiveTab: Dispatch<SetStateAction<string>>;
 }) {
   const tabs = [
-    { id: "purchased", label: "تم شراءها" },
+    { id: "purchased", label: "مشترياتي" },
+    { id: "ordered", label: "طلباتي" },
     { id: "cart", label: "في العربة" },
     { id: "settings", label: "الإعدادات" },
   ];

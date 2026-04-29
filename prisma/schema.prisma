@@ -116,7 +116,6 @@ model UserProduct {
   order      Order?        @relation(fields: [orderId], references: [id])
   orderId    String?
 
-  @@unique([userId, productId, status])
 }
 
 model Order {
@@ -126,6 +125,8 @@ model Order {
   totalPrice Float
   address    String
   phone      String
+  city       String
+  fullName   String
   status     OrderStatus   @default(PENDING)
   items      UserProduct[]
   createdAt  DateTime      @default(now())

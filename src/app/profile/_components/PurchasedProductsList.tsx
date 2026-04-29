@@ -1,38 +1,26 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+import ProfileProductCard from "@/components/ProfileProductCard/ProfileProductCard";
 import { formatCurrency } from "@/lib/formatCurrency";
-import Image from "next/image";
+import { OrderDbType } from "@/lib/types";
 // =================================================
-function PurchasedProductsList({ products }: { products: any[] }) {
+function PurchasedProductsList({ orders }: { orders: OrderDbType[] }) {
+  const totalPrice = orders.reduce((acc, order) => acc + order.totalPrice, 0);
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-3">
-        {products.map((p, index) => (
-          <div
-            key={index}
-            className="flex items-center gap-3 bg-white/5 ring ring-gray-50/20 py-3 px-10 rounded-md text-white"
-          >
-            <Image src={p.image} alt="product image" width={111} height={111} />
-            <div className="flex flex-col gap-2">
-              <h2 className="font-semibold text-[17px]">{p.name}</h2>
-              <p className="text-gray-400 text-sm">{p.description}</p>
-              <p className="font-bold text-cyan-300 text-xl">
-                {formatCurrency.format(p.price)}
-              </p>
-              <div className="flex items-center gap-2">
-                <p>الكمية : </p>
-                <p className="size-6 flex items-center justify-center rounded-full ring ring-gray-50/20 bg-white/5 text-sm font-serif">
-                  2
-                </p>
-              </div>
-            </div>
-          </div>
-        ))}
+        {orders.map((order) =>
+          order.items.map((item) => <ProfileProductCard product={item} />),
+        )}
       </div>
-      <div className="p-3 bg-white/5 ring ring-gray-50/20 rounded-md text-white flex items-center justify-between font-bold">
-        مجموع الشراء :
+      <div className="p-3 bg-white/5 w-140 ring ring-gray-50/20 rounded-md text-white flex items-center justify-between font-bold">
+        <p className="flex items-center gap-2">
+          مجموع الشراء :
+          <span className="text-xs font-bold">
+            (شامل الضريبة ومصاريف الشحن)
+          </span>
+        </p>
         <span className="bg-white/10 ring ring-gray-50/30 font-extrabold py-2 px-6 rounded text-cyan-400">
-          {formatCurrency.format(3000)}
+          {formatCurrency.format(Number(totalPrice))}
         </span>
       </div>
     </div>

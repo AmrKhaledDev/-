@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-
+// ====================================
 export type LoginErrors = {
   email?: string;
   password?: string;
@@ -17,7 +17,15 @@ export type ProductDbType = Prisma.ProductGetPayload<{
 }>;
 export type UserSessionWithRelations = Prisma.UserGetPayload<{
   include: {
-    userProducts: true;
+    userProducts: {
+      include: {
+        product: {
+          include: {
+            productImages: true;
+          };
+        };
+      };
+    };
   };
 }>;
 export type OpinionsDbType = Prisma.OpinionGetPayload<{
@@ -26,6 +34,28 @@ export type OpinionsDbType = Prisma.OpinionGetPayload<{
     likes: {
       include: {
         user: true;
+      };
+    };
+  };
+}>;
+export type UserProductDbType = Prisma.UserProductGetPayload<{
+  include: {
+    product: {
+      include: {
+        productImages: true;
+      };
+    };
+  };
+}>;
+export type OrderDbType = Prisma.OrderGetPayload<{
+  include: {
+    items: {
+      include: {
+        product: {
+          include: {
+            productImages: true;
+          };
+        };
       };
     };
   };

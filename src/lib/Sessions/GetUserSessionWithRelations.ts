@@ -12,6 +12,10 @@ export const GetUserSessionWithRelations = async () => {
         },
         include: {
           userProducts: {
+            where: {
+              status: "IN_CART",
+              orderId: null,
+            },
             include: {
               product: {
                 include: {

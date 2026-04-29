@@ -23,8 +23,8 @@ function ProductCard({
         />
       </div>
       <Link
-        href={`/product/${product.id}`}
-        className="sm:line-clamp-1 line-clamp-2 hover:underline font-semibold sm:text-[15px] text-sm"
+        href={product.stock > 0 ? `/product/${product.id}` : ""}
+        className={`sm:line-clamp-1 line-clamp-2 ${product.stock > 0 ? "hover:underline" : "cursor-default"} font-semibold sm:text-[15px] text-sm`}
       >
         {product.name}
       </Link>
@@ -32,10 +32,16 @@ function ProductCard({
         {product.description}
       </p>
       <div className="flex items-center justify-between flex-wrap-reverse gap-2">
-        <ButtonAddToCart userSession={userSession} productId={product.id} />
-        <p className="text-[#00d3f3] font-extrabold sm:text-[15px] text-sm">
-          {formatCurrency.format(product.price)}
-        </p>
+        {product.stock > 0 ? (
+          <>
+            <ButtonAddToCart userSession={userSession} productId={product.id} />
+            <p className="text-[#00d3f3] font-extrabold sm:text-[15px] text-sm">
+              {formatCurrency.format(product.price)}
+            </p>
+          </>
+        ) : (
+          <p className="text-red-400 font-bold">لم يعد متوفر حاليًا</p>
+        )}
       </div>
     </div>
   );
