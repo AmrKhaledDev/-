@@ -13,11 +13,11 @@ function ProductCardFooter({
   userSession: User | null;
 }) {
   return (
-    <div className="flex items-center justify-between flex-wrap-reverse gap-2">
+    <div className="flex sm:items-center sm:flex-row flex-col-reverse justify-between  gap-2">
       {product.stock > 0 ? (
         <>
           <ButtonAddToCart userSession={userSession} productId={product.id} />
-          <div className="flex flex-col items-end">
+          <div className="flex flex-col sm:items-end">
             <p
               className={`text-[#00d3f3] font-extrabold sm:text-[15px] text-sm ${product.isOnSale && "line-through text-gray-400"}`}
             >

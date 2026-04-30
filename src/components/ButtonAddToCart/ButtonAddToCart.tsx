@@ -40,13 +40,13 @@ function ButtonAddToCart({
     <button
       disabled={loading}
       onClick={AddToCart}
-      className="flex items-center cursor-pointer hover:scale-105 mytransition not-disabled:bgg-ip py-2 px-4 rounded-md gap-2 font-semibold sm:text-sm text-xs"
+      className="flex items-center justify-center cursor-pointer hover:scale-105 mytransition not-disabled:bgg-ip sm:py-2 py-1.5 px-4 rounded-md gap-2 font-semibold text-sm"
     >
       {loading ? (
         <Loader />
       ) : (
         <>
-          <ShoppingBag className="sm:size-4.5 size-3.5" /> اضف
+          <ShoppingBag className="sm:size-4.5 size-4" /> أضف
         </>
       )}
     </button>

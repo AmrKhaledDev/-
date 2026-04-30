@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 function Hero() {
   return (
     <section className=" text-white overflow-x-hidden md:pt-0 pt-3">
-      <div className="flex h-[88vh] justify-center items-center md:flex-row flex-col md:gap-0 gap-10">
+      <div className="flex sm:h-[88vh] not-sm:min-h-screen justify-center items-center md:flex-row flex-col md:gap-0 gap-10">
         <div className="flex flex-col md:gap-8 gap-4 items-center md:items-start">
           <motion.div
             initial={{ opacity: 0, x: 100 }}

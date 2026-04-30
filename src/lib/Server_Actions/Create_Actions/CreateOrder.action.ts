@@ -63,6 +63,15 @@ export const CreateOrderAction = async (
         success: false,
         message: "عذراً، لا يمكنك طلب أكثر من 10 قطع في الأوردر الواحد.",
       };
+    if (userSession.role !== "SELLER") {
+      for (const p of userProducts) {
+        if (p.quantity > 2)
+          return {
+            success: false,
+            message: "عذراً لا يمكنك طلب أكثر من قطعتين للمنتج الواحد",
+          };
+      }
+    }
     const subtotal = userProducts.reduce(
       (acc, p) => acc + p.priceAtAdd * p.quantity,
       0,

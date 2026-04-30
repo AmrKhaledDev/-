@@ -2,8 +2,8 @@ import { ProductDbType } from "@/lib/types";
 import Image from "next/image";
 import { User } from "@prisma/client";
 import Link from "next/link";
-import ProductCardFooter from "./_components/ProductCardFooter";
 import LowStockWarning from "@/components/LowStockWarning/LowStockWarning";
+import ProductCardFooter from "@/components/ProductCardFooter/ProductCardFooter";
 // ========================================================================
 function ProductCard({
   product,

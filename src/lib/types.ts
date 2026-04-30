@@ -60,3 +60,13 @@ export type OrderDbType = Prisma.OrderGetPayload<{
     };
   };
 }>;
+export type CategoriesOffers = Prisma.CategoryGetPayload<{
+  include: {
+    products: {
+      include: {
+        productImages: true;
+        category: true;
+      };
+    };
+  };
+}>;
