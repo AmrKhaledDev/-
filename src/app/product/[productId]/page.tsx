@@ -60,7 +60,7 @@ async function Product({ params }: { params: Promise<{ productId: string }> }) {
         {!userSession && (
           <Link
             href={"/login"}
-            className="shadow ring ring-indigo-500/30 text-indigo-500 py-2 px-5 rounded text-sm text-center"
+            className="shadow w-fit bgg-ip text-white py-2 px-5 rounded text-sm text-center mx-auto font-bold"
           >
             سجل الدخول لترك رأيك عن هذا المنتج
           </Link>

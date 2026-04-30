@@ -19,9 +19,7 @@ function ProductActions({
     setProductAcLoading(true);
     const result = await QtyProductAction(productId, type);
     setProductAcLoading(false);
-    if (!result.success)
-      return toast.error(result.message, { className: "toast-font" });
-    toast.success(result.message, { className: "toast-font" });
+    if (!result.success) return;
     router.refresh();
   };
   const deleteProduct = async () => {
@@ -29,7 +27,6 @@ function ProductActions({
     const result = await DeleteUserProductAction(productId);
     if (!result.success)
       return toast.error(result.message, { className: "toast-font" });
-    toast.success(result.message, { className: "toast-font" });
     router.refresh();
   };
   return (

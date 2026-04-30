@@ -18,12 +18,12 @@ function ButtonAddToCart({
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const AddToCart = async () => {
+    if (!userSession) {
+      toast.error("سجل الدخول لإضافة المنتج");
+      return redirect("/login");
+    }
     try {
       setLoading(true);
-      if (!userSession) {
-        toast.error("سجل الدخول لإضافة المنتج");
-        return redirect("/login");
-      }
       const result = await CreateUserProductAction(userSession.id, productId);
       if (!result.success)
         return toast.error(result.message, { className: "toast-font" });

@@ -1,9 +1,9 @@
-import { formatCurrency } from "@/lib/formatCurrency";
 import { ProductDbType } from "@/lib/types";
 import Image from "next/image";
-import ButtonAddToCart from "./_components/ButtonAddToCart";
 import { User } from "@prisma/client";
 import Link from "next/link";
+import ProductCardFooter from "./_components/ProductCardFooter";
+import LowStockWarning from "@/components/LowStockWarning/LowStockWarning";
 // ========================================================================
 function ProductCard({
   product,
@@ -12,8 +12,19 @@ function ProductCard({
   product: ProductDbType;
   userSession: User | null;
 }) {
+  let discountPercentage = null;
+  if (
+    product.price &&
+    product.discountPrice &&
+    product.price > product.discountPrice
+  ) {
+    discountPercentage = Math.round(
+      ((product.price - product.discountPrice) / product.price) * 100,
+    );
+  }
+
   return (
-    <div className="sm:p-5 p-3 rounded-2xl shadow-xl flex flex-col gap-4 ring ring-gray-50/20 bg-white/5 hover:shadow-2xl hover:scale-102 mytransition">
+    <div className="sm:p-5 relative p-3 rounded-2xl shadow-xl flex flex-col gap-4 ring ring-gray-50/20 bg-white/5 hover:shadow-2xl hover:scale-102 mytransition">
       <div className="relative aspect-square bg-white rounded-2xl overflow-hidden">
         <Image
           src={product.productImages[0].image}
@@ -31,18 +42,11 @@ function ProductCard({
       <p className="sm:text-sm text-xs text-gray-300 sm:line-clamp-2 line-clamp-3 ">
         {product.description}
       </p>
-      <div className="flex items-center justify-between flex-wrap-reverse gap-2">
-        {product.stock > 0 ? (
-          <>
-            <ButtonAddToCart userSession={userSession} productId={product.id} />
-            <p className="text-[#00d3f3] font-extrabold sm:text-[15px] text-sm">
-              {formatCurrency.format(product.price)}
-            </p>
-          </>
-        ) : (
-          <p className="text-red-400 font-bold">لم يعد متوفر حاليًا</p>
-        )}
-      </div>
+      <ProductCardFooter userSession={userSession} product={product} />
+      <LowStockWarning product={product} />
+      <span className="absolute top-1 shadow left-1 bg-red-500 py-1 px-3 rounded-full font-extrabold text-xs">
+        خصم {discountPercentage}%
+      </span>
     </div>
   );
 }

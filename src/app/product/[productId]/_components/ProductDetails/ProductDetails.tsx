@@ -11,7 +11,8 @@ import { toast } from "react-toastify";
 import { redirect, useRouter } from "next/navigation";
 import Loader from "@/components/Loader/Loader";
 import ProductInfo from "./_components/ProductInfo";
-import Image from "next/image";
+import ProductImages from "./_components/ProductImages";
+import ProductBrand from "./_components/ProductBrand";
 // ===============================================================
 function ProductDetails({
   product,
@@ -49,35 +50,30 @@ function ProductDetails({
           هذا المنتج في العربة <Check className="text-green-400 size-5" />
         </h2>
       )}
-      <div className="flex justify-between gap-6 ">
+
+      <div className="flex justify-between gap-6">
         <div className="flex gap-2">
           {product.productImages.length > 1 && (
-            <div className="flex flex-col gap-2">
-              {product.productImages.map((image) => (
-                <Image
-                  onClick={() => setProductImage(image.image)}
-                  key={image.id}
-                  src={image.image}
-                  alt="product image"
-                  width={50}
-                  height={50}
-                  className="object-contain size-20 bg-white rounded-lg cursor-pointer"
-                />
-              ))}
-            </div>
+            <ProductImages
+              product={product}
+              setProductImage={setProductImage}
+            />
           )}
           <ProductImage image={productImage} />
         </div>
-        <div className="flex-1 flex flex-col gap-3">
-          <ProductInfo product={product} />
-          <ProductCategory category={product.category.name} />
-          {!existingItem && (
-            <ProductQuantity
-              quantity={quantity}
-              setQuantity={setQuantity}
-              product={product}
-            />
-          )}
+        <div className="flex-1 flex flex-col justify-between">
+          <div className="flex flex-col gap-3.5">
+            <ProductBrand product={product} />
+            <ProductInfo product={product} />
+            <ProductCategory category={product.category.name} />
+            {!existingItem && (
+              <ProductQuantity
+                quantity={quantity}
+                setQuantity={setQuantity}
+                product={product}
+              />
+            )}
+          </div>
           {!existingItem && (
             <button
               disabled={loading}

@@ -29,16 +29,22 @@ function ProductInfo({ product }: { product: ProductDbType }) {
             </p>
           ),
       )}
-      <p
-        className={`flex items-center font-extrabold text-sm gap-1 ${product.isOriginal ? "text-green-500" : " text-red-500"}`}
-      >
-        {product.isOriginal ? " منتج أصلي" : "ليس منتج أصلي"}
-        {product.isOriginal ? (
-          <CheckCircle2 className="size-5" strokeWidth={3} />
-        ) : (
-          <CircleX className="size-5" strokeWidth={3} />
-        )}
-      </p>
+      {(product.isOriginal == true || product.isOriginal == false) && (
+        <p
+          className={`flex items-center font-extrabold text-sm gap-1 ${product.isOriginal ? "text-green-500" : " text-red-500"}`}
+        >
+          {product.isOriginal == true && (
+            <>
+              منتج أصلي <CheckCircle2 className="size-5" strokeWidth={3} />
+            </>
+          )}
+          {product.isOriginal == false && (
+            <>
+              ليس منتج أصلي <CircleX className="size-5" strokeWidth={3} />
+            </>
+          )}
+        </p>
+      )}
     </>
   );
 }
