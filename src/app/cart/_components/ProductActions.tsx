@@ -57,7 +57,6 @@ function ProductActions({
         onClick={deleteProduct}
         disabled={productAcLoading}
       >
-        {" "}
         <Trash2 />
       </button>
     </div>

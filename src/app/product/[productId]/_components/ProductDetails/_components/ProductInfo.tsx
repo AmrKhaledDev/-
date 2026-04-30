@@ -1,6 +1,7 @@
 import { formatCurrency } from "@/lib/formatCurrency";
 import { ProductDbType } from "@/lib/types";
 import { CheckCircle2, CircleX } from "lucide-react";
+import ProductCategory from "./ProductCategory";
 // =============================================================
 function ProductInfo({ product }: { product: ProductDbType }) {
   const infos = [
@@ -45,6 +46,7 @@ function ProductInfo({ product }: { product: ProductDbType }) {
           )}
         </p>
       )}
+      <ProductCategory category={product.category.name} />
     </>
   );
 }

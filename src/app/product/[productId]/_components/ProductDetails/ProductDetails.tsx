@@ -3,7 +3,6 @@ import { ShoppingBag } from "lucide-react";
 import { useState } from "react";
 import ProductImage from "./_components/ProductImage";
 import ProductQuantity from "./_components/ProductQuantity";
-import ProductCategory from "./_components/ProductCategory";
 import { ProductDbType, UserSessionWithRelations } from "@/lib/types";
 import { Check } from "lucide-react";
 import { CreateUserProductAction } from "@/lib/Server_Actions/Create_Actions/CreateUserProduct.action";
@@ -50,7 +49,6 @@ function ProductDetails({
           هذا المنتج في العربة <Check className="text-green-400 size-5" />
         </h2>
       )}
-
       <div className="flex justify-between gap-6">
         <div className="flex gap-2">
           {product.productImages.length > 1 && (
@@ -61,11 +59,10 @@ function ProductDetails({
           )}
           <ProductImage image={productImage} />
         </div>
-        <div className="flex-1 flex flex-col justify-between">
-          <div className="flex flex-col gap-3.5">
+        <div className="flex-1 flex flex-col gap-10 justify-between">
+          <div className="flex flex-col gap-2.5">
             <ProductBrand product={product} />
             <ProductInfo product={product} />
-            <ProductCategory category={product.category.name} />
             {!existingItem && (
               <ProductQuantity
                 quantity={quantity}

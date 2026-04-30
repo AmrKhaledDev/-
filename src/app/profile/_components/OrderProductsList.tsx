@@ -3,7 +3,7 @@ import ProfileProductCard from "@/components/ProfileProductCard/ProfileProductCa
 import { formatCurrency } from "@/lib/formatCurrency";
 import { OrderDbType } from "@/lib/types";
 // =================================================
-function PurchasedProductsList({ orders }: { orders: OrderDbType[] }) {
+function OrderProductsList({ orders }: { orders: OrderDbType[] }) {
   const totalPrice = orders.reduce((acc, order) => acc + order.totalPrice, 0);
   return (
     <div className="flex flex-col gap-8">
@@ -14,7 +14,7 @@ function PurchasedProductsList({ orders }: { orders: OrderDbType[] }) {
       </div>
       <div className="p-3 bg-white/5 w-140 ring ring-gray-50/20 rounded-md text-white flex items-center justify-between font-bold">
         <p className="flex items-center gap-2">
-          مجموع الشراء :
+          مجموع الطلب :
           <span className="text-xs font-bold">
             (شامل الضريبة ومصاريف الشحن)
           </span>
@@ -27,4 +27,4 @@ function PurchasedProductsList({ orders }: { orders: OrderDbType[] }) {
   );
 }
 
-export default PurchasedProductsList;
+export default OrderProductsList;
