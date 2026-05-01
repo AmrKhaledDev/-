@@ -70,3 +70,11 @@ export type CategoriesOffers = Prisma.CategoryGetPayload<{
     };
   };
 }>;
+
+export type OrderErrors = {
+  fullName?: string;
+  address?: string;
+  city?: string;
+  phone?: string;
+  serverError?: string;
+};

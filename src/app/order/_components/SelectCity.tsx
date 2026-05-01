@@ -1,0 +1,69 @@
+"use client";
+
+import AlertMessage from "@/components/AlertMessage/AlertMessage";
+import { EGYPT_GOVERNORATES } from "@/lib/data/egypt-covernorates";
+import { ChevronDown } from "lucide-react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+// =======================================================
+function SelectCity({
+  city,
+  setCity,
+  error,
+}: {
+  city: string;
+  setCity: Dispatch<SetStateAction<string>>;
+  error?: string;
+}) {
+  const egypt_covernorates = EGYPT_GOVERNORATES;
+  const [dropDown, setDropDown] = useState(false);
+  useEffect(() => {
+    const handle = (e: MouseEvent) => {
+      if (e.target instanceof Element) {
+        if (!e.target.closest(".dropDown, .buttonShowDropDown"))
+          setDropDown(false);
+      }
+    };
+    document.addEventListener("click", handle);
+    return () => {
+      document.removeEventListener("click", handle);
+    };
+  }, []);
+  return (
+    <div className="w-full relative">
+      <button
+        type="button"
+        onClick={() => setDropDown(!dropDown)}
+        className="flex mb-1 buttonShowDropDown hover:bg-white/25 hover:border-gray-50/30 items-center justify-between border bg-white/5 border-gray-50/20 py-2 px-3 w-full rounded-md outline-none focus:border-gray-50/30 cursor-pointer mytransition"
+      >
+        <h2 className={`${city ? "text-white" : "text-gray-300 "}`}>
+          {city ? city : "المدينة"}
+        </h2>
+        <ChevronDown
+          className={`text-gray-200 ${dropDown && "rotate-180"} mytransition`}
+        />
+      </button>
+      {error && <AlertMessage type="error" message={error} />}
+      {dropDown && (
+        <div
+          className={`flex flex-col dropDown gap-2 p-2 mt-2 max-h-60 mytransition overflow-y-auto w-full backdrop-blur-2xl ring ring-gray-50/20 rounded-xl`}
+        >
+          {egypt_covernorates.map((c) => (
+            <button
+              type="button"
+              onClick={() => {
+                setCity(c.name_ar);
+                setDropDown(false);
+              }}
+              key={c.id}
+              className={`hover:bgg-ip text-sm mytransition bg-white/5 ring ring-gray-50/20 shadow py-2 rounded-md cursor-pointer ${city === c.name_ar && "bgg-ip"}`}
+            >
+              {c.name_ar}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default SelectCity;

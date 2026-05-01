@@ -5,7 +5,6 @@ export const CreateUserProductAction = async (
   userId: string,
   productId: string,
   quantity: number = 1,
-  
 ): Promise<{ success: boolean; message: string }> => {
   try {
     if (!userId || !productId)
@@ -14,7 +13,13 @@ export const CreateUserProductAction = async (
       prisma.user.findUnique({ where: { id: userId }, select: { id: true } }),
       prisma.product.findUnique({
         where: { id: productId },
-        select: { id: true, stock: true, price: true },
+        select: {
+          id: true,
+          stock: true,
+          price: true,
+          isOnSale: true,
+          discountPrice: true,
+        },
       }),
     ]);
     if (!user) return { success: false, message: "برجاء تسجيل الدخول أولاً" };
@@ -42,7 +47,9 @@ export const CreateUserProductAction = async (
         where: { id: existingItem.id },
         data: {
           quantity: { increment: quantity },
-          priceAtAdd: product.price,
+          priceAtAdd: product.discountPrice
+            ? product.discountPrice
+            : product.price,
         },
       });
     } else {
@@ -51,14 +58,16 @@ export const CreateUserProductAction = async (
           userId,
           productId,
           quantity,
-          priceAtAdd: product.price,
+          priceAtAdd: product.discountPrice
+            ? product.discountPrice
+            : product.price,
         },
       });
     }
     return {
       success: true,
       message: existingItem
-        ? "تم تعديل كمية المنتج الخاص بك"
+        ? "تم تعديل كمية المنتج"
         : "تم إضافة المنتج إلى العربة بنجاح",
     };
   } catch (error) {

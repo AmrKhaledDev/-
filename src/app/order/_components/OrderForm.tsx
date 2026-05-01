@@ -1,109 +1,55 @@
 "use client";
 import { FormEvent, useState } from "react";
 import OrderFormField from "./OrderFormField";
-import { OrderFormSchema } from "@/lib/Zod_Schemas/Order_Schemas/OrderForm.schema";
-import { CreateOrderAction } from "@/lib/Server_Actions/Create_Actions/CreateOrder.action";
 import { useRouter } from "next/navigation";
 import Loader from "@/components/Loader/Loader";
-import AlertMessage from "@/components/AlertMessage/AlertMessage";
 import { User } from "@prisma/client";
-// ========================================================
-type Errors = {
-  fullName?: string;
-  address?: string;
-  city?: string;
-  phone?: string;
-  serverError?: string;
-};
+import OrderSuccessMessage from "./OrderSuccessMessage";
+import SelectCity from "./SelectCity";
+import { OrderErrors } from "@/lib/types";
+import { orderInputs } from "@/lib/data/OrderInputs";
+import { handleCreateOrder } from "./handleCreateOrder";
+// =========================================================================================
 function OrderForm({ userSession }: { userSession: User }) {
+  const [orderSuccess, setOrderSuccess] = useState(false);
   const router = useRouter();
-  const [errors, setErrors] = useState<Errors>({});
+  const [errors, setErrors] = useState<OrderErrors>({});
   const [loading, setLoading] = useState(false);
   const [fullName, setFullName] = useState(userSession.name || "");
   const [address, setAddress] = useState(userSession.address || "");
   const [city, setCity] = useState(userSession.city || "");
   const [phone, setPhone] = useState(userSession.phone || "");
-  const inputs = [
-    {
-      id: "FULL_NAME",
-      value: fullName,
-      onChange: setFullName,
-      placeholder: "الاسم الكامل",
-      type: "text",
-      error: errors.fullName,
-    },
-    {
-      id: "ADDRESS",
-      value: address,
-      onChange: setAddress,
-      placeholder: "العنوان الكامل",
-      type: "text",
-      error: errors.address,
-    },
-    {
-      id: "CITY",
-      value: city,
-      onChange: setCity,
-      placeholder: "المدينة",
-      type: "text",
-      error: errors.city,
-    },
-    {
-      id: "PHONE",
-      value: phone,
-      onChange: setPhone,
-      placeholder: "رقم الهاتف",
-      type: "number",
-      error: errors.phone,
-    },
-  ];
-  const createOrder = async (e: FormEvent) => {
-    e.preventDefault();
-    try {
-      setLoading(true);
-      setErrors({});
-      const validation = OrderFormSchema.safeParse({
-        fullName,
-        address,
-        city,
-        phone,
-      });
-      if (!validation.success) {
-        const fieldErrors = validation.error.flatten().fieldErrors;
-        setErrors({
-          fullName: fieldErrors.fullName?.[0],
-          address: fieldErrors.address?.[0],
-          city: fieldErrors.city?.[0],
-          phone: fieldErrors.phone?.[0],
-        });
-        return;
-      }
-      const result = await CreateOrderAction({
-        fullName,
-        address,
-        city,
-        phone,
-      });
-      if (!result.success)
-        return setErrors({
-          serverError: result.message,
-        });
-      router.push("/order-success");
-      router.refresh();
-    } catch (error) {
-      console.log(error);
-      setErrors({ serverError: "حدث خطأ أثناء انشاء طلبك حاول مرة أخرى" });
-    } finally {
-      setLoading(false);
-    }
+  const createOrder = (e: FormEvent) => {
+    handleCreateOrder(
+      e,
+      setLoading,
+      setErrors,
+      fullName,
+      address,
+      city,
+      phone,
+      setOrderSuccess,
+      router,
+    );
   };
+  const inputs = orderInputs(
+    fullName,
+    setFullName,
+    errors,
+    phone,
+    setPhone,
+    address,
+    setAddress,
+  );
   return (
     <form
       onSubmit={createOrder}
-      className="p-5 rounded-2xl flex-1 shadow-xl flex flex-col gap-5 ring ring-gray-50/20 bg-white/5"
+      className="p-5 rounded-2xl h-fit flex-1 shadow-xl flex flex-col gap-5 ring ring-gray-50/20 bg-white/5"
     >
       {errors.serverError && (
-        <AlertMessage type="error" message={errors.serverError} />
+        <p className="p-5 bg-red-500 text-red-100 font-semibold">
+          {errors.serverError}
+        </p>
       )}
       <h2 className="font-semibold text-center text-xl mb-3">بيانات الشحن</h2>
       {inputs.map((input) => (
@@ -116,6 +62,7 @@ function OrderForm({ userSession }: { userSession: User }) {
           error={input.error}
         />
       ))}
+      <SelectCity city={city} setCity={setCity} error={errors.city} />
       <button
         disabled={loading}
         className="not-disabled:bgg-ip flex items-center disabled:bg-gray-500 gap-5 justify-center py-3 active:scale-96 mytransition rounded shadow not-disabled:cursor-pointer"
@@ -128,6 +75,12 @@ function OrderForm({ userSession }: { userSession: User }) {
           " تأكيد الطلب"
         )}
       </button>
+      {orderSuccess && (
+        <OrderSuccessMessage
+          orderSuccess={orderSuccess}
+          setOrderSuccess={setOrderSuccess}
+        />
+      )}
     </form>
   );
 }
