@@ -24,7 +24,7 @@ function ProductCard({
   }
 
   return (
-    <div className="sm:p-5 relative p-3 rounded-2xl shadow-xl flex flex-col gap-4 ring ring-gray-50/20 bg-white/5 hover:shadow-2xl hover:scale-102 mytransition">
+    <div className="sm:p-5 relative p-3 rounded-2xl shadow-xl flex flex-col justify-between gap-3 ring ring-gray-50/20 bg-white/5 hover:shadow-2xl hover:scale-102 mytransition">
       <div className="relative aspect-square bg-white rounded-2xl overflow-hidden">
         <Image
           src={product.productImages[0].image}

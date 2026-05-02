@@ -6,13 +6,16 @@ import Settings from "./Settings";
 import { OrderDbType, UserProductDbType } from "@/lib/types";
 import UserProductsInCart from "./UserProductsInCart";
 import OrderProductsList from "./OrderProductsList";
+import { User } from "@prisma/client";
 // ==========================================================
 function ProfileDetails({
   productsInCart,
   orders,
+  userSession,
 }: {
   productsInCart: UserProductDbType[];
   orders: OrderDbType[];
+  userSession: User;
 }) {
   const [activeTab, setActiveTab] = useState("purchased");
   return (
@@ -25,10 +28,8 @@ function ProfileDetails({
       </div>
       <div className="flex flex-col gap-10 items-center">
         <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
-        {activeTab === "ordered" && (
-          <OrderProductsList orders={orders} />
-        )}
-        {activeTab === "settings" && <Settings />}
+        {activeTab === "ordered" && <OrderProductsList orders={orders} />}
+        {activeTab === "settings" && <Settings userSession={userSession} />}
         {activeTab === "cart" && (
           <UserProductsInCart products={productsInCart} />
         )}

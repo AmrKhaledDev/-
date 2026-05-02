@@ -36,6 +36,7 @@ async function Profile() {
         <ProfileDetails
           productsInCart={userSession.userProducts}
           orders={PurchasedProducts}
+          userSession={userSession}
         />
       </div>
     </main>

@@ -63,7 +63,7 @@ function ProductDetails({
           <div className="flex flex-col gap-2.5">
             <ProductBrand product={product} />
             <ProductInfo product={product} />
-            {!existingItem && (
+            {!existingItem && product.stock > 0 && (
               <ProductQuantity
                 quantity={quantity}
                 setQuantity={setQuantity}
@@ -71,7 +71,12 @@ function ProductDetails({
               />
             )}
           </div>
-          {!existingItem && (
+          {product.stock < 1 && (
+            <p className="text-red-50 font-semibold text-center bg-red-500 py-2">
+              نفذت الكمية
+            </p>
+          )}
+          {!existingItem && product.stock > 0 && (
             <button
               disabled={loading}
               onClick={handle}

@@ -20,13 +20,13 @@ enum ProductStatus {
 }
 
 enum OrderStatus {
-  PENDING // قيد الانتظار
-  CONFIRMED // تم التأكيد
-  SHIPPED // تم الشحن
-  DELIVERED // تم التوصيل
-  CANCELLED // ملغي
-  REFUNDED // مسترجع
-  NO_ANSWER // صاحب الأوردر لم يرد
+  PENDING 
+  CONFIRMED 
+  SHIPPED 
+  DELIVERED 
+  CANCELLED 
+  REFUNDED
+  NO_ANSWER
 }
 
 // =============================================== Models
@@ -125,6 +125,7 @@ model UserProduct {
 
 model Order {
   id         String        @id @default(cuid())
+  order_num  Int           @default(autoincrement())
   userId     String
   user       User          @relation(fields: [userId], references: [id])
   totalPrice Float

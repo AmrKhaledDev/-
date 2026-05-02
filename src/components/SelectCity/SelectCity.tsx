@@ -9,10 +9,12 @@ function SelectCity({
   city,
   setCity,
   error,
+  disabled,
 }: {
   city: string;
   setCity: Dispatch<SetStateAction<string>>;
   error?: string;
+  disabled?: boolean;
 }) {
   const egypt_covernorates = EGYPT_GOVERNORATES;
   const [dropDown, setDropDown] = useState(false);
@@ -31,15 +33,14 @@ function SelectCity({
   return (
     <div className="w-full relative">
       <button
+        disabled={disabled}
         type="button"
         onClick={() => setDropDown(!dropDown)}
-        className="flex mb-1 buttonShowDropDown hover:bg-white/25 hover:border-gray-50/30 items-center justify-between border bg-white/5 border-gray-50/20 py-2 px-3 w-full rounded-md outline-none focus:border-gray-50/30 cursor-pointer mytransition"
+        className={`flex mb-1 group ${city ? "text-white" : "text-gray-300 "} disabled:text-gray-600 buttonShowDropDown not-disabled:hover:bg-white/25 not-disabled:hover:border-gray-50/30 items-center justify-between border bg-white/5 border-gray-50/20 disabled:border-gray-50/10 py-2 px-3 w-full rounded-md outline-none focus:border-gray-50/30 not-disabled:cursor-pointer mytransition`}
       >
-        <h2 className={`${city ? "text-white" : "text-gray-300 "}`}>
-          {city ? city : "المدينة"}
-        </h2>
+        {city ? city : "المدينة"}
         <ChevronDown
-          className={`text-gray-200 ${dropDown && "rotate-180"} mytransition`}
+          className={`text-gray-200 ${dropDown && "rotate-180"} mytransition group-disabled:text-gray-600`}
         />
       </button>
       {error && <AlertMessage type="error" message={error} />}

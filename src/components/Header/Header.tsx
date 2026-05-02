@@ -1,11 +1,12 @@
 import Link from "next/link";
-import { ShoppingCart } from "lucide-react";
+import {  ShoppingCart } from "lucide-react";
 import { LayoutDashboard } from "lucide-react";
 import Image from "next/image";
 import AuthLinks from "./_components/AuthLinks";
 import MenuItems from "./_components/MenuItems";
 import UserMenu from "./_components/UserMenu";
 import { GetUserSessionWithRelations } from "@/lib/Sessions/GetUserSessionWithRelations";
+import SearchBar from "./_components/SearchBar";
 // ===========================================================
 async function Header() {
   const userSession = await GetUserSessionWithRelations();
@@ -31,12 +32,13 @@ async function Header() {
         </Link>
         <div className="flex items-center lg:flex-row flex-row-reverse sm:gap-5 gap-2">
           <MenuItems />
-          <div className="flex items-center sm:gap-4 gap-2 sm:flex-nowrap flex-wrap">
+          <div className="flex items-center sm:gap-4 gap-2.5 sm:flex-nowrap flex-wrap ">
             {userSession ? (
               <>
+                <SearchBar />
                 <Link href={"/cart"} className="relative">
                   <ShoppingCart className="sm:size-6 size-5" />
-                  <span className="absolute -top-2 -right-2 bg-red-500 shadow rounded-full sm:size-4.5 size-3.5 text-sm flex items-center justify-center  text-white">
+                  <span className="absolute sm:-top-2 -top-1 sm:-right-2 -right-1.5 bg-red-500 shadow rounded-full sm:size-4.5 size-3.5 sm:text-sm text-xs flex items-center justify-center  text-white">
                     {totalProducts}
                   </span>
                 </Link>

@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import ProductDetails from "./_components/ProductDetails/ProductDetails";
 import ProductOpinions from "./_components/ProductOpinions/ProductOpinions";
 import { Metadata } from "next";
+import SimilarProducts from "./_components/SimilarProducts";
 // ========================================================
 export async function generateMetadata({
   params,
@@ -37,7 +38,16 @@ async function Product({ params }: { params: Promise<{ productId: string }> }) {
     },
     include: {
       productImages: true,
-      category: true,
+      category: {
+        include: {
+          products: {
+            include: {
+              productImages: true,
+              category: true,
+            },
+          },
+        },
+      },
       opinions: {
         include: {
           user: true,
@@ -56,7 +66,7 @@ async function Product({ params }: { params: Promise<{ productId: string }> }) {
   if (!product) return redirect("/categories");
   return (
     <main className="section-p text-white">
-      <div className="mycontainer flex flex-col gap-10">
+      <div className="mycontainer flex flex-col gap-20">
         {!userSession && (
           <Link
             href={"/login"}
@@ -66,6 +76,10 @@ async function Product({ params }: { params: Promise<{ productId: string }> }) {
           </Link>
         )}
         <ProductDetails product={product} userSession={userSession} />
+        <SimilarProducts
+          products={product.category.products}
+          userSession={userSession}
+        />
         <ProductOpinions
           opinions={product.opinions}
           userSession={userSession}

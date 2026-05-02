@@ -1,14 +1,14 @@
 "use client";
 import { FormEvent, useState } from "react";
-import OrderFormField from "./OrderFormField";
 import { useRouter } from "next/navigation";
 import Loader from "@/components/Loader/Loader";
 import { User } from "@prisma/client";
 import OrderSuccessMessage from "./OrderSuccessMessage";
-import SelectCity from "./SelectCity";
+import SelectCity from "../../../components/SelectCity/SelectCity";
 import { OrderErrors } from "@/lib/types";
 import { orderInputs } from "@/lib/data/OrderInputs";
 import { handleCreateOrder } from "./handleCreateOrder";
+import FormField from "@/components/FormField/FormField";
 // =========================================================================================
 function OrderForm({ userSession }: { userSession: User }) {
   const [orderSuccess, setOrderSuccess] = useState(false);
@@ -53,16 +53,17 @@ function OrderForm({ userSession }: { userSession: User }) {
       )}
       <h2 className="font-semibold text-center text-xl mb-3">بيانات الشحن</h2>
       {inputs.map((input) => (
-        <OrderFormField
+        <FormField
           key={input.id}
           type={input.type}
           value={input.value}
           placeholder={input.placeholder}
           onChange={input.onChange}
           error={input.error}
+          disabled={loading}
         />
       ))}
-      <SelectCity city={city} setCity={setCity} error={errors.city} />
+      <SelectCity city={city} setCity={setCity} error={errors.city} disabled={loading} />
       <button
         disabled={loading}
         className="not-disabled:bgg-ip flex items-center disabled:bg-gray-500 gap-5 justify-center py-3 active:scale-96 mytransition rounded shadow not-disabled:cursor-pointer"

@@ -37,7 +37,7 @@ function ProductsOffers({
         return (
           <SwiperSlide
             key={p.id}
-            className="ring hover:shadow-2xl flex! hover:-translate-y-1 flex-col sm:gap-4 gap-2 h-fit! sm:w-60! w-45! ring-gray-50/20 bg-white/5 mytransition! sm:p-5 p-3  rounded-2xl"
+            className="ring hover:shadow-2xl flex! hover:-translate-y-1 flex-col justify-between gap-3 sm:w-60! w-45! ring-gray-50/20 bg-white/5 mytransition! sm:p-5 p-3  rounded-2xl"
           >
             <ProductOfferImage product={p} />
             <Link
