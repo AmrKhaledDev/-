@@ -6,7 +6,7 @@ import AuthLinks from "./_components/AuthLinks";
 import MenuItems from "./_components/MenuItems";
 import UserMenu from "./_components/UserMenu";
 import { GetUserSessionWithRelations } from "@/lib/Sessions/GetUserSessionWithRelations";
-import SearchBar from "./_components/SearchBar";
+import SearchBar from "./_components/SearchBar/SearchBar";
 // ===========================================================
 async function Header() {
   const userSession = await GetUserSessionWithRelations();

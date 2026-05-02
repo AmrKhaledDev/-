@@ -1,10 +1,16 @@
 "use client";
-import { Search, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import SearchBarInput from "./_components/SearchBarInput";
+import CloseSearchBar from "./_components/CloseSearchBar";
+import OpenSearchBar from "./_components/OpenSearchBar";
+import Results from "./_components/Results";
 // ==============================
 function SearchBar() {
   const [showSearchBar, setShowSearchBar] = useState(false);
+  const [search,setSearch] = useState("")
+  const [loading,setLoading] = useState(false)
+  const [data,setData] = useState({})
   useEffect(() => {
     const handle = (e: MouseEvent) => {
       if (e.target instanceof Element) {
@@ -19,9 +25,7 @@ function SearchBar() {
   }, []);
   return (
     <>
-      <button onClick={() => setShowSearchBar(true)} className="cursor-pointer buttonShowSearchBar">
-        <Search className="sm:size-5.5 size-4.5" />
-      </button>
+      <OpenSearchBar setShowSearchBar={setShowSearchBar} />
       {showSearchBar && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -37,23 +41,11 @@ function SearchBar() {
             viewport={{ once: true }}
             className="bg-white px-10 py-7 h-fit w-full flex justify-center items-center gap-6 boxSearchBar"
           >
-            <form className="w-[65%] focus-within:border-2 border pr-4 border-indigo-500 rounded-xl overflow-hidden flex h-14 items-center gap-2.5">
-              <button>
-                <Search className="text-gray-400 size-5" />
-              </button>
-              <span className="h-5 w-px block bg-black/5 rounded-full" />
-              <input
-                type="text"
-                placeholder="ما الذي تبحث عنه؟"
-                className="placeholder:text-gray-400 text-gray-400 flex-1 text-xl h-full outline-none"
-              />
-            </form>
-            <button
-              onClick={() => setShowSearchBar(false)}
-              className="hover:bg-gray-100 p-2 rounded-full group mytransition"
-            >
-              <X className="text-black group-hover:rotate-180 mytransition" />
-            </button>
+            <div className="w-[65%] relative">
+              <SearchBarInput search={search} setSearch={setSearch}/>
+              <Results />
+            </div>
+            <CloseSearchBar setShowSearchBar={setShowSearchBar} />
           </motion.div>
         </motion.div>
       )}
