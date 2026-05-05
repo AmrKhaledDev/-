@@ -5,12 +5,27 @@ import SearchBarInput from "./_components/SearchBarInput";
 import CloseSearchBar from "./_components/CloseSearchBar";
 import OpenSearchBar from "./_components/OpenSearchBar";
 import Results from "./_components/Results";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { ProductDbType } from "@/lib/types";
+import { Category } from "@prisma/client";
+import { usePathname } from "next/navigation";
 // ==============================
 function SearchBar() {
+  const pathname = usePathname();
   const [showSearchBar, setShowSearchBar] = useState(false);
-  const [search,setSearch] = useState("")
-  const [loading,setLoading] = useState(false)
-  const [data,setData] = useState({})
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState<{
+    products: ProductDbType[];
+    categories: Category[];
+  } | null>(null);
+  useEffect(() => {
+    if (showSearchBar) {
+      setShowSearchBar(false);
+      setSearch("")
+    }
+  }, [pathname]);
   useEffect(() => {
     const handle = (e: MouseEvent) => {
       if (e.target instanceof Element) {
@@ -23,6 +38,23 @@ function SearchBar() {
       document.removeEventListener("click", handle);
     };
   }, []);
+  useEffect(() => {
+    const FETCH_DATA = async () => {
+      if (!search.trim()) return;
+      setLoading(true);
+      const res = await axios.get(
+        `/api/search?q=${encodeURIComponent(search)}`,
+      );
+      const data = res.data as
+        | { products: ProductDbType[]; categories: Category[] }
+        | { error: string };
+      setLoading(false);
+      if ("error" in data)
+        return toast.error(data.error, { className: "toast-font" });
+      setData(data);
+    };
+    FETCH_DATA();
+  }, [search]);
   return (
     <>
       <OpenSearchBar setShowSearchBar={setShowSearchBar} />
@@ -42,8 +74,14 @@ function SearchBar() {
             className="bg-white px-10 py-7 h-fit w-full flex justify-center items-center gap-6 boxSearchBar"
           >
             <div className="w-[65%] relative">
-              <SearchBarInput search={search} setSearch={setSearch}/>
-              <Results />
+              <SearchBarInput search={search} setSearch={setSearch} />
+              {search.trim() && data !== null && (
+                <Results
+                  products={data.products}
+                  categories={data.categories}
+                  search={search}
+                />
+              )}
             </div>
             <CloseSearchBar setShowSearchBar={setShowSearchBar} />
           </motion.div>

@@ -1,5 +1,6 @@
-"use client"
+"use client";
 import { Search } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction } from "react";
 // ======================================
 function SearchBarInput({
@@ -9,6 +10,7 @@ function SearchBarInput({
   search: string;
   setSearch: Dispatch<SetStateAction<string>>;
 }) {
+  const router = useRouter();
   return (
     <div className="w-full focus-within:border-2 border pr-4 border-indigo-500 rounded-xl overflow-hidden flex h-14 items-center gap-2.5">
       <button>
@@ -16,6 +18,12 @@ function SearchBarInput({
       </button>
       <span className="h-5 w-px block bg-black/5 rounded-full" />
       <input
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            if (!search.trim()) return;
+            router.push(`/search?q=${search}`);
+          }
+        }}
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         type="text"
